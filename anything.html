@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Transmission 002.5 — Tester Smart Watch Pro</title>
+  <meta name="description" content="A transmission from the bench. Tester Smart Watch Pro, in motion." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..900,0..100,0..1;1,9..144,300..900,0..100,0..1&family=Familjen+Grotesk:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="css/anything.css" />
+</head>
+<body class="tx">
+
+  <!-- background atmosphere -->
+  <div class="tx-aurora" aria-hidden="true"></div>
+  <div class="tx-noise" aria-hidden="true"></div>
+
+  <!-- TRANSMISSION HUD BAR -->
+  <header class="tx-bar" id="nav">
+    <span class="tx-bar__id">
+      <span class="tx-bar__dot"></span>
+      TX&nbsp;/&nbsp;002.5
+    </span>
+    <span class="tx-bar__center">
+      <span>52.5200&deg;&nbsp;N</span>
+      <span class="tx-bar__sep">&middot;</span>
+      <span>13.4050&deg;&nbsp;E</span>
+      <span class="tx-bar__sep">&middot;</span>
+      <span id="tx-clock">--:--:--</span>
+    </span>
+    <a href="product.html" class="tx-bar__back">
+      <span>Return&nbsp;Channel</span>
+      <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true">
+        <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.4" fill="none"/>
+      </svg>
+    </a>
+  </header>
+
+  <!-- HERO — off-center AI video panel + left-aligned italic title -->
+  <section class="tx-hero">
+    <div class="tx-hero__title-col">
+      <p class="tx-hero__eyebrow">
+        <span class="tx-hero__eyebrow-tick"></span>
+        Transmission&nbsp;002.5
+        <span class="tx-hero__eyebrow-meta">&mdash; Berlin&nbsp;Bench</span>
+      </p>
+
+      <h1 class="tx-hero__title">
+        <span class="tx-hero__title-word" data-word="Tester">Tester</span>
+        <span class="tx-hero__title-word tx-hero__title-word--wonk" data-word="in&nbsp;motion">in&nbsp;motion</span>
+        <span class="tx-hero__title-word tx-hero__title-word--italic" data-word="002.5">002.5</span>
+      </h1>
+
+      <p class="tx-hero__lede">
+        Eight seconds of light, lens, and metal. A transmission from our prototyping bench
+        in Berlin &mdash; rendered, recorded, sent. Watch the Pro <em>become itself</em>.
+      </p>
+
+      <div class="tx-hero__meta">
+        <div class="tx-hero__meta-cell">
+          <span class="tx-hero__meta-key">Lens</span>
+          <span class="tx-hero__meta-val">35&nbsp;mm prime</span>
+        </div>
+        <div class="tx-hero__meta-cell">
+          <span class="tx-hero__meta-key">Codec</span>
+          <span class="tx-hero__meta-val">ProRes&nbsp;4444</span>
+        </div>
+        <div class="tx-hero__meta-cell">
+          <span class="tx-hero__meta-key">Stock</span>
+          <span class="tx-hero__meta-val">Veo&nbsp;/&nbsp;Tester</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="tx-hero__video-frame">
+      <div class="tx-hero__video-stack">
+        <video
+          id="hero-video"
+          class="tx-hero__video"
+          src="assets/ai_product_video.mp4"
+          autoplay muted loop playsinline preload="auto"
+          aria-label="Cinematic transmission of the Tester Smart Watch Pro"
+        ></video>
+
+        <!-- chromatic edge overlay -->
+        <span class="tx-hero__video-edge" aria-hidden="true"></span>
+        <!-- scan line -->
+        <span class="tx-hero__video-scan" aria-hidden="true"></span>
+        <!-- HUD overlay on the video -->
+        <div class="tx-hero__video-hud" aria-hidden="true">
+          <span class="tx-hero__hud-id">VEO&nbsp;/&nbsp;002.5</span>
+          <span class="tx-hero__hud-meter">
+            <span class="tx-hero__hud-meter-fill" id="tx-meter"></span>
+          </span>
+          <span class="tx-hero__hud-rec">
+            <span class="tx-hero__hud-rec-dot"></span>
+            LIVE
+          </span>
+        </div>
+      </div>
+      <p class="tx-hero__video-caption">
+        Recorded on the Tester bench &mdash; <em>04:88:000</em>, gate&nbsp;A, take&nbsp;7.
+      </p>
+    </div>
+  </section>
+
+  <!-- CINEMASCOPE — letterboxed scroll-driven frame strip -->
+  <section class="tx-scope" id="scope">
+    <div class="tx-scope__intro">
+      <p class="tx-scope__eyebrow">
+        <span class="tx-hero__eyebrow-tick"></span>
+        Mode <span class="tx-scope__eyebrow-sep">&middot;</span> Transparency
+      </p>
+      <h2 class="tx-scope__title">
+        <span>Scrub through the cut.</span>
+        <em class="tx-scope__title-em">One scroll &mdash; one second.</em>
+      </h2>
+    </div>
+
+    <div class="tx-scope__pin">
+      <div class="tx-scope__stage">
+
+        <div class="tx-scope__panel">
+          <canvas id="frames-canvas" class="tx-scope__canvas"></canvas>
+
+          <!-- letterbox bars -->
+          <span class="tx-scope__bar tx-scope__bar--top" aria-hidden="true"></span>
+          <span class="tx-scope__bar tx-scope__bar--bottom" aria-hidden="true"></span>
+
+          <!-- corner ticks -->
+          <span class="tx-scope__tick tx-scope__tick--tl"></span>
+          <span class="tx-scope__tick tx-scope__tick--tr"></span>
+          <span class="tx-scope__tick tx-scope__tick--bl"></span>
+          <span class="tx-scope__tick tx-scope__tick--br"></span>
+
+          <!-- live coordinates / specimen labels -->
+          <div class="tx-scope__readout" aria-hidden="true">
+            <div class="tx-scope__readout-row">
+              <span>X</span><span id="readout-x">0000</span>
+              <span>Y</span><span id="readout-y">0000</span>
+              <span>Z</span><span id="readout-z">0000</span>
+            </div>
+            <div class="tx-scope__readout-row tx-scope__readout-row--accent">
+              <span>FRAME</span><span id="readout-frame">001 / ---</span>
+              <span>EXP</span><span>1/64</span>
+              <span>ISO</span><span>200</span>
+            </div>
+          </div>
+
+          <!-- loader -->
+          <div class="tx-scope__loader" id="frames-loader">
+            <span class="tx-scope__loader-label">No transmission</span>
+            <span class="tx-scope__loader-hint" id="frames-loader-hint">
+              Frame buffer empty. Run the FFmpeg command to populate <code>assets/frames/</code>.
+            </span>
+            <span class="tx-scope__loader-bar"><span id="frames-loader-fill"></span></span>
+          </div>
+        </div>
+
+        <!-- scrub instructions on the right -->
+        <aside class="tx-scope__side">
+          <p class="tx-scope__side-mark">
+            <span class="tx-scope__side-mark-letter">F</span>
+            <span class="tx-scope__side-mark-num" id="frames-side-num">001</span>
+          </p>
+          <p class="tx-scope__side-of">
+            of <span id="frames-side-total">---</span>
+          </p>
+          <p class="tx-scope__side-cue">
+            Continue scrolling.<br/>
+            The reel will follow.
+          </p>
+          <span class="tx-scope__side-line"></span>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- DIAGONAL SPLIT MANIFESTO -->
+  <section class="tx-split">
+    <div class="tx-split__panel tx-split__panel--text">
+      <p class="tx-split__eyebrow">
+        <span class="tx-hero__eyebrow-tick"></span>
+        Notes from the bench
+      </p>
+      <h2 class="tx-split__title">
+        We <em>filmed</em> it<br/>
+        instead of<br/>
+        <em>rendering</em> it.
+      </h2>
+      <div class="tx-split__body">
+        <p>
+          Every angle of the Pro you see here is real glass and real metal under real
+          light. Eight seconds, one continuous take, captured on a 35&nbsp;mm prime with
+          the lens open just under a stop. The bench was dressed black on black; the
+          only colour you&rsquo;ll see is whatever the watch decides to throw back.
+        </p>
+        <p>
+          What you&rsquo;re scrolling through above is the same footage, frame by frame.
+          The picture is meant to be looked at &mdash; not interpreted.
+        </p>
+      </div>
+    </div>
+    <div class="tx-split__panel tx-split__panel--echo">
+      <video
+        class="tx-split__video"
+        src="assets/ai_product_video.mp4"
+        autoplay muted loop playsinline preload="metadata"
+        aria-hidden="true"
+      ></video>
+      <span class="tx-split__echo-label">B-Roll / Take 02</span>
+    </div>
+  </section>
+
+  <!-- CLOSING / RETURN -->
+  <section class="tx-close">
+    <p class="tx-close__stamp">
+      <span class="tx-hero__eyebrow-tick"></span>
+      End of transmission &middot; <span id="tx-close-clock">--:--:--</span>
+    </p>
+    <a href="product.html" class="tx-close__link">
+      <span class="tx-close__link-row">
+        <span class="tx-close__link-arrow">&larr;</span>
+        <span class="tx-close__link-word">Return</span>
+      </span>
+      <span class="tx-close__link-row tx-close__link-row--big">
+        <em>to the product</em>
+      </span>
+      <span class="tx-close__link-row tx-close__link-row--meta">
+        See the Pro in full &mdash; spec sheet, dissection, reservation.
+      </span>
+    </a>
+
+    <footer class="tx-foot">
+      <p>Tester Instruments &middot; Berlin &middot; 2026</p>
+      <ul class="tx-foot__social" aria-label="Social links">
+        <li><a href="#" aria-label="Twitter / X"><svg width="16" height="16" viewBox="0 0 18 18" aria-hidden="true"><path d="M2.5 2.5l5.7 7.6L3 15.5h2l4.3-4.6 3.4 4.6h3.8L10.5 7.6l4.7-5.1h-2L9.2 6.6 6 2.5H2.5z" fill="currentColor"/></svg></a></li>
+        <li><a href="#" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 18 18" aria-hidden="true"><rect x="2.5" y="2.5" width="13" height="13" rx="3.5" stroke="currentColor" stroke-width="1.2" fill="none"/><circle cx="9" cy="9" r="3.2" stroke="currentColor" stroke-width="1.2" fill="none"/><circle cx="13" cy="5" r="0.8" fill="currentColor"/></svg></a></li>
+        <li><a href="#" aria-label="YouTube"><svg width="16" height="16" viewBox="0 0 18 18" aria-hidden="true"><rect x="1.5" y="4.5" width="15" height="9" rx="2.5" stroke="currentColor" stroke-width="1.2" fill="none"/><path d="M7.5 6.8l4 2.2-4 2.2V6.8z" fill="currentColor"/></svg></a></li>
+      </ul>
+    </footer>
+  </section>
+
+  <script src="js/anything.js" defer></script>
+</body>
+</html>

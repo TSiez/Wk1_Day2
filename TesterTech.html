@@ -1,0 +1,3658 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Tester Tech — One signal. Every device.</title>
+  <meta name="description" content="Tester Tech — a connected family of smart watches, glasses, ambient assistants, and home devices. One mesh, one design language. Built in Berlin." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&family=Manrope:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <style>
+    /* ============================================================
+       Tester Tech — TesterTech.html
+       Editorial dark luxury, tuned for connected-device showcase
+       ============================================================ */
+
+    :root {
+      --bg:            #0a0908;
+      --bg-soft:       #111110;
+      --bg-deep:       #060504;
+      --surface:       #15140f;
+      --surface-2:     #1c1a14;
+      --surface-3:     #221f17;
+      --line:          rgba(243, 239, 231, 0.08);
+      --line-strong:   rgba(243, 239, 231, 0.16);
+
+      --text:          #f3efe7;
+      --text-soft:     #c8c2b6;
+      --text-mute:     #8a847a;
+      --text-faint:    #5a564e;
+
+      --brass:         #c89e6a;
+      --brass-soft:    rgba(200, 158, 106, 0.16);
+      --brass-glow:    rgba(200, 158, 106, 0.35);
+      --cool:          #76b2dc;
+      --cool-soft:     rgba(118, 178, 220, 0.16);
+
+      --font-display:  'Instrument Serif', 'Times New Roman', serif;
+      --font-body:     'Manrope', system-ui, sans-serif;
+      --font-mono:     'JetBrains Mono', ui-monospace, monospace;
+
+      --shell-pad:     clamp(1.25rem, 4vw, 3.5rem);
+      --section-pad:   clamp(5rem, 10vw, 9rem);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-weight: 400;
+      font-size: 1rem;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+    img, video { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+    ul, ol { list-style: none; padding: 0; margin: 0; }
+    button { font: inherit; }
+    ::selection { background: var(--brass); color: var(--bg); }
+
+    /* ---- Atmospheric layers ---- */
+    .grain {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 100;
+      opacity: 0.045;
+      mix-blend-mode: overlay;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+    }
+    .vignette {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 99;
+      background:
+        radial-gradient(ellipse at top, transparent 35%, rgba(0,0,0,0.45) 100%),
+        radial-gradient(ellipse at bottom, transparent 45%, rgba(0,0,0,0.5) 100%);
+    }
+
+    /* ============================================================
+       NAV
+       ============================================================ */
+    .nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+      padding: 1.1rem var(--shell-pad);
+      background: linear-gradient(to bottom, rgba(10, 9, 8, 0.85), rgba(10, 9, 8, 0.4) 80%, transparent);
+      backdrop-filter: blur(14px) saturate(120%);
+      -webkit-backdrop-filter: blur(14px) saturate(120%);
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.4s ease, background 0.4s ease, padding 0.4s ease;
+    }
+    .nav.is-scrolled {
+      background: rgba(10, 9, 8, 0.94);
+      border-bottom-color: var(--line);
+      padding-top: 0.85rem;
+      padding-bottom: 0.85rem;
+    }
+    .nav__brand {
+      display: flex;
+      align-items: baseline;
+      gap: 0.6rem;
+    }
+    .nav__mark {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 1.6rem;
+      color: var(--brass);
+      line-height: 1;
+      transform: translateY(2px);
+    }
+    .nav__wordmark {
+      font-family: var(--font-mono);
+      font-size: 0.74rem;
+      letter-spacing: 0.32em;
+      color: var(--text);
+    }
+    .nav__edition {
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.18em;
+      color: var(--text-faint);
+      padding-left: 0.7rem;
+      border-left: 1px solid var(--line);
+    }
+    .nav__links {
+      display: flex;
+      gap: 2rem;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+    }
+    .nav__links a {
+      color: var(--text-soft);
+      position: relative;
+      padding-bottom: 4px;
+      transition: color 0.25s ease;
+    }
+    .nav__links a::after {
+      content: "";
+      position: absolute;
+      left: 0; right: 0; bottom: 0;
+      height: 1px;
+      background: var(--brass);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.35s cubic-bezier(0.6, 0.2, 0.2, 1);
+    }
+    .nav__links a:hover { color: var(--text); }
+    .nav__links a:hover::after { transform: scaleX(1); }
+
+    .nav__cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.6rem 1.05rem;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--text);
+      border: 1px solid var(--line-strong);
+      border-radius: 999px;
+      transition: border-color 0.3s ease, background 0.3s ease, color 0.3s ease;
+    }
+    .nav__cta:hover {
+      border-color: var(--brass);
+      background: var(--brass);
+      color: var(--bg);
+    }
+    .nav__cta svg { transition: transform 0.3s ease; }
+    .nav__cta:hover svg { transform: translateX(-2px); }
+
+    @media (max-width: 880px) {
+      .nav__links { display: none; }
+      .nav__edition { display: none; }
+    }
+
+    /* ============================================================
+       BUTTONS
+       ============================================================ */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.7rem;
+      padding: 0.95rem 1.4rem;
+      font-family: var(--font-mono);
+      font-size: 0.74rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+      will-change: transform;
+    }
+    .btn svg { transition: transform 0.3s ease; }
+    .btn:hover svg { transform: translateX(3px); }
+    .btn--primary {
+      background: var(--brass);
+      color: var(--bg);
+      box-shadow: 0 12px 32px -16px var(--brass-glow);
+    }
+    .btn--primary:hover {
+      background: #d8b07e;
+      transform: translateY(-1px);
+      box-shadow: 0 20px 44px -16px var(--brass-glow);
+    }
+    .btn--ghost {
+      background: transparent;
+      color: var(--text);
+      border-color: var(--line-strong);
+    }
+    .btn--ghost:hover {
+      border-color: var(--text);
+      background: rgba(255, 255, 255, 0.04);
+    }
+    .btn--large { padding: 1.15rem 1.8rem; font-size: 0.78rem; }
+
+    /* ============================================================
+       SHARED — eyebrow / section head
+       ============================================================ */
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.7rem;
+      margin: 0 0 1.6rem;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--text-mute);
+    }
+    .eyebrow__dot {
+      width: 6px; height: 6px;
+      background: var(--brass);
+      border-radius: 50%;
+      box-shadow: 0 0 12px var(--brass-glow);
+    }
+    .eyebrow__sep { color: var(--text-faint); }
+
+    .section-head {
+      max-width: 1400px;
+      margin: 0 auto clamp(3rem, 5vw, 4.5rem);
+      padding: 0 var(--shell-pad);
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+      gap: clamp(2rem, 4vw, 4rem);
+      align-items: end;
+    }
+    .section-title {
+      margin: 0;
+      font-family: var(--font-display);
+      font-weight: 400;
+      font-size: clamp(2.4rem, 5.4vw, 4.6rem);
+      line-height: 1.02;
+      letter-spacing: -0.015em;
+      color: var(--text);
+    }
+    .section-title em { font-style: italic; color: var(--brass); }
+    .section-lede {
+      margin: 0;
+      font-size: 1rem;
+      font-weight: 300;
+      color: var(--text-soft);
+      line-height: 1.65;
+      max-width: 38rem;
+    }
+    @media (max-width: 820px) {
+      .section-head { grid-template-columns: 1fr; align-items: start; }
+    }
+
+    /* ============================================================
+       HERO
+       ============================================================ */
+    .hero {
+      position: relative;
+      /* Doubled so the user can scroll through the tilt-flat reveal while
+         .hero__stage stays pinned to the viewport via position: sticky.
+         No overflow:hidden here — that would create a scroll container
+         and break position: sticky on .hero__stage. The .hero__stage
+         handles its own bg clipping. */
+      min-height: 200vh;
+      isolation: isolate;
+    }
+    .hero__stage {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      height: 100svh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: var(--shell-pad);
+      padding-top: clamp(8rem, 18vh, 12rem);
+      padding-bottom: clamp(4rem, 8vh, 6rem);
+      overflow: hidden;
+      isolation: isolate;
+      /* 3D perspective for the scroll-driven rotateX on the cluster. */
+      perspective: 1400px;
+    }
+    .hero__bg {
+      position: absolute;
+      inset: 0;
+      z-index: -2;
+      background:
+        radial-gradient(60% 50% at 80% 30%, rgba(200, 158, 106, 0.22), transparent 70%),
+        radial-gradient(50% 45% at 18% 75%, rgba(118, 178, 220, 0.16), transparent 70%),
+        var(--bg);
+      animation: heroDrift 16s ease-in-out infinite alternate;
+    }
+    @keyframes heroDrift {
+      from { transform: translate3d(0, 0, 0); }
+      to   { transform: translate3d(-2%, 1.5%, 0); }
+    }
+    .hero__grid {
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      background-image:
+        linear-gradient(to right, var(--line) 1px, transparent 1px),
+        linear-gradient(to bottom, var(--line) 1px, transparent 1px);
+      background-size: 96px 96px;
+      opacity: 0.4;
+      mask-image: radial-gradient(ellipse at 50% 45%, black 5%, transparent 75%);
+      -webkit-mask-image: radial-gradient(ellipse at 50% 45%, black 5%, transparent 75%);
+      pointer-events: none;
+    }
+
+    .hero__corners { position: absolute; inset: clamp(1.25rem, 4vw, 3.5rem); pointer-events: none; z-index: 1; }
+    .hero__corner { position: absolute; width: 22px; height: 22px; border: 1px solid var(--line-strong); }
+    .hero__corner--tl { top: 0; left: 0; border-right: 0; border-bottom: 0; }
+    .hero__corner--tr { top: 0; right: 0; border-left: 0; border-bottom: 0; }
+    .hero__corner--bl { bottom: 0; left: 0; border-right: 0; border-top: 0; }
+    .hero__corner--br { bottom: 0; right: 0; border-left: 0; border-top: 0; }
+
+    .hero__inner {
+      position: relative;
+      z-index: 2;
+      max-width: 1400px;
+      margin: 0 auto;
+      width: 100%;
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+      gap: clamp(2rem, 5vw, 5rem);
+      align-items: center;
+    }
+    .hero__copy { max-width: 38rem; }
+    .hero__title {
+      margin: 0;
+      font-family: var(--font-display);
+      font-weight: 400;
+      font-size: clamp(3.2rem, 9vw, 8rem);
+      line-height: 0.95;
+      letter-spacing: -0.018em;
+      color: var(--text);
+    }
+    .hero__title span { display: block; }
+    .hero__title-italic { font-style: italic; color: var(--brass); }
+    .hero__tagline {
+      max-width: 42ch;
+      margin: 1.8rem 0 2.4rem;
+      font-size: clamp(1rem, 1.2vw, 1.15rem);
+      line-height: 1.65;
+      color: var(--text-soft);
+      font-weight: 300;
+    }
+    .hero__cta-row { display: flex; flex-wrap: wrap; gap: 0.8rem; }
+
+    /* Hero visual: stacked device cluster */
+    .hero__cluster {
+      position: relative;
+      aspect-ratio: 1 / 1.05;
+      max-width: 520px;
+      width: 100%;
+      margin: 0 auto;
+      /* Scroll-driven tilt: starts tilted back, rotates flat by progress 1.
+         JS overrides --tilt and --scl as the user scrolls. */
+      transform-origin: 50% 80%;
+      transform: rotateX(var(--tilt, 20deg)) scale(var(--scl, 1.05));
+      will-change: transform;
+    }
+    .hero__copy {
+      /* JS sets --copy-y as the user scrolls. */
+      transform: translateY(var(--copy-y, 0px));
+      will-change: transform;
+    }
+    .hero__cluster-floor {
+      position: absolute;
+      bottom: 12%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 75%;
+      height: 30%;
+      background: radial-gradient(ellipse at center, rgba(200, 158, 106, 0.35), transparent 60%);
+      filter: blur(28px);
+      animation: floorPulse 5s ease-in-out infinite alternate;
+    }
+    @keyframes floorPulse {
+      from { opacity: 0.6; transform: translateX(-50%) scale(0.96); }
+      to   { opacity: 1;   transform: translateX(-50%) scale(1.04); }
+    }
+    .hero__device {
+      position: absolute;
+    }
+    .hero__device--watch   { top: 28%; left: 46%; transform: translate(-50%, 0); z-index: 3; }
+    .hero__device--glasses { top: 2%; right: -2%; z-index: 2; }
+    .hero__device--speaker { bottom: 10%; left: 2%; z-index: 2; }
+    .hero__device--ring    { bottom: 20%; right: 6%; z-index: 3; }
+
+    /* Signal pulse — each device emits a soft brass ring that expands outward,
+       fired in sequence around the cluster to read as "one signal traveling
+       through the mesh." Products themselves don't move. */
+    .hero__device::before {
+      content: "";
+      position: absolute;
+      top: 50%; left: 50%;
+      width: 38%;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      border: 1px solid var(--brass);
+      opacity: 0;
+      pointer-events: none;
+      transform: translate(-50%, -50%) scale(0.5);
+      animation: deviceSignal 8s ease-out infinite;
+    }
+    .hero__device--watch::before   { animation-delay: 0s;    width: 50%; }
+    .hero__device--glasses::before { animation-delay: 2s;    width: 30%; }
+    .hero__device--ring::before    { animation-delay: 4s; }
+    .hero__device--speaker::before { animation-delay: 6s; }
+
+    @keyframes deviceSignal {
+      0%   { transform: translate(-50%, -50%) scale(0.45); opacity: 0;    border-color: var(--brass); }
+      12%  { opacity: 0.55; }
+      60%  { opacity: 0.18; border-color: rgba(200, 158, 106, 0.4); }
+      100% { transform: translate(-50%, -50%) scale(2.6);  opacity: 0;    border-color: rgba(200, 158, 106, 0); }
+    }
+    @media (max-width: 880px) {
+      .hero__inner { grid-template-columns: 1fr; gap: 2.5rem; }
+      .hero__cluster { max-width: 380px; }
+    }
+
+    /* ============================================================
+       DEVICE RENDERS — CSS/SVG "product photography"
+       ============================================================ */
+
+    /* --- Watch --- */
+    .dv-watch {
+      position: relative;
+      width: 140px; aspect-ratio: 0.62;
+    }
+    .dv-watch__strap-top, .dv-watch__strap-bot {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 56%;
+      height: 32%;
+      background: linear-gradient(180deg, #1c1a14, #0a0908);
+      border: 1px solid var(--line-strong);
+      border-radius: 8px 8px 4px 4px;
+    }
+    .dv-watch__strap-top { top: 0; }
+    .dv-watch__strap-bot { bottom: 0; border-radius: 4px 4px 8px 8px; }
+    .dv-watch__case {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 100%; aspect-ratio: 1;
+      border-radius: 24%;
+      background:
+        radial-gradient(circle at 30% 25%, rgba(255,255,255,0.18), transparent 50%),
+        linear-gradient(135deg, #2a2620, #0a0908 70%);
+      border: 1px solid rgba(255,255,255,0.12);
+      box-shadow:
+        0 30px 60px -20px rgba(0,0,0,0.8),
+        inset 0 0 0 1px rgba(255,255,255,0.04),
+        inset 0 -10px 20px rgba(0,0,0,0.5);
+    }
+    .dv-watch__face {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 78%; aspect-ratio: 1;
+      border-radius: 22%;
+      background:
+        radial-gradient(circle at 35% 30%, rgba(200,158,106,0.4), transparent 40%),
+        radial-gradient(circle at 70% 75%, rgba(118,178,220,0.2), transparent 50%),
+        #060504;
+      box-shadow: inset 0 0 12px rgba(200,158,106,0.2);
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+    }
+    .dv-watch__time {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 1.3rem;
+      color: var(--text);
+      line-height: 1;
+    }
+    .dv-watch__time-meta {
+      position: absolute;
+      bottom: 16%;
+      font-family: var(--font-mono);
+      font-size: 0.42rem;
+      letter-spacing: 0.18em;
+      color: var(--brass);
+    }
+    .dv-watch__crown {
+      position: absolute;
+      top: 42%;
+      right: -3%;
+      width: 6%;
+      aspect-ratio: 1/2;
+      background: linear-gradient(90deg, #3a352b, #c89e6a 50%, #3a352b);
+      border-radius: 2px;
+      box-shadow: 0 0 6px rgba(200,158,106,0.3);
+    }
+
+    /* --- Glasses --- */
+    .dv-glasses {
+      position: relative;
+      width: 200px; aspect-ratio: 2.6;
+    }
+    .dv-glasses__bridge {
+      position: absolute;
+      top: 40%; left: 50%;
+      transform: translateX(-50%);
+      width: 18%;
+      height: 6%;
+      background: linear-gradient(180deg, #2a2620, #0a0908);
+      border-radius: 3px;
+    }
+    .dv-glasses__lens {
+      position: absolute;
+      top: 12%;
+      width: 38%;
+      aspect-ratio: 1.1;
+      border-radius: 32% 32% 38% 38%;
+      background:
+        radial-gradient(ellipse at 30% 25%, rgba(255,255,255,0.4), transparent 40%),
+        linear-gradient(135deg, #2a2620 0%, #0a0908 100%);
+      border: 1.5px solid #1a1812;
+      box-shadow:
+        inset 0 0 18px rgba(0,0,0,0.6),
+        0 20px 40px -16px rgba(0,0,0,0.7);
+    }
+    .dv-glasses__lens::after {
+      content: "";
+      position: absolute;
+      top: 20%; left: 20%;
+      width: 30%; height: 12%;
+      background: linear-gradient(120deg, rgba(255,255,255,0.5), transparent);
+      border-radius: 50%;
+      filter: blur(2px);
+    }
+    .dv-glasses__lens--l { left: 4%; }
+    .dv-glasses__lens--r { right: 4%; }
+    .dv-glasses__temple {
+      position: absolute;
+      top: 36%;
+      width: 6%;
+      height: 4%;
+      background: linear-gradient(90deg, #2a2620, transparent);
+    }
+    .dv-glasses__temple--l { left: 0; }
+    .dv-glasses__temple--r { right: 0; transform: scaleX(-1); }
+
+    /* --- Speaker (Halo) --- */
+    .dv-speaker {
+      position: relative;
+      width: 140px; aspect-ratio: 0.85;
+    }
+    .dv-speaker__body {
+      position: absolute;
+      inset: 12% 0 0;
+      border-radius: 50% 50% 22% 22% / 18% 18% 14% 14%;
+      background:
+        radial-gradient(ellipse at 30% 20%, rgba(255,255,255,0.16), transparent 50%),
+        linear-gradient(180deg, #2a2620 0%, #15140f 60%, #0a0908 100%);
+      border: 1px solid rgba(255,255,255,0.06);
+      box-shadow:
+        0 30px 60px -20px rgba(0,0,0,0.8),
+        inset 0 -16px 24px rgba(0,0,0,0.5);
+    }
+    .dv-speaker__top-ring {
+      position: absolute;
+      top: 8%; left: 50%;
+      transform: translateX(-50%);
+      width: 78%; aspect-ratio: 4;
+      border-radius: 50%;
+      background: radial-gradient(ellipse at center, rgba(200,158,106,0.65), transparent 70%);
+      box-shadow: 0 0 18px var(--brass-glow);
+      animation: speakerRing 3s ease-in-out infinite;
+    }
+    @keyframes speakerRing {
+      0%, 100% { opacity: 0.7; }
+      50%      { opacity: 1; }
+    }
+    .dv-speaker__mesh {
+      position: absolute;
+      inset: 28% 16% 18%;
+      border-radius: 50% / 24%;
+      background:
+        repeating-radial-gradient(circle at center, rgba(255,255,255,0.06) 0 1px, transparent 1px 3px);
+      opacity: 0.7;
+    }
+
+    /* --- Ring --- */
+    .dv-ring {
+      position: relative;
+      width: 120px; aspect-ratio: 1;
+    }
+    .dv-ring__band {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      background:
+        conic-gradient(from 140deg,
+          #d8b07e 0deg, #c89e6a 60deg,
+          #6b563a 130deg, #2a2620 180deg,
+          #6b563a 230deg, #c89e6a 300deg, #d8b07e 360deg);
+      mask: radial-gradient(circle, transparent 52%, black 53%, black 86%, transparent 87%);
+      -webkit-mask: radial-gradient(circle, transparent 52%, black 53%, black 86%, transparent 87%);
+      box-shadow: 0 24px 50px -20px rgba(0,0,0,0.8);
+    }
+    .dv-ring__sensor {
+      position: absolute;
+      top: 50%; left: 12%;
+      transform: translateY(-50%);
+      width: 12%; aspect-ratio: 1;
+      background: radial-gradient(circle, var(--cool), transparent 70%);
+      border-radius: 50%;
+      box-shadow: 0 0 10px var(--cool);
+    }
+
+    /* --- Display Hub (used in Smart Living) --- */
+    .dv-display {
+      position: relative;
+      width: 100%; aspect-ratio: 1.55;
+      max-width: 380px;
+      border-radius: 18px;
+      background: linear-gradient(180deg, #1c1a14, #0a0908);
+      border: 1px solid var(--line-strong);
+      padding: 6%;
+      box-shadow:
+        0 40px 80px -30px rgba(0,0,0,0.8),
+        inset 0 0 0 1px rgba(255,255,255,0.04);
+      overflow: hidden;
+    }
+    .dv-display__screen {
+      width: 100%; height: 100%;
+      border-radius: 10px;
+      background:
+        radial-gradient(circle at 80% 20%, rgba(200,158,106,0.4), transparent 50%),
+        radial-gradient(circle at 20% 80%, rgba(118,178,220,0.3), transparent 50%),
+        #0a0908;
+      position: relative;
+      overflow: hidden;
+    }
+    .dv-display__screen::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(transparent 50%, rgba(0,0,0,0.18) 50%);
+      background-size: 100% 3px;
+      pointer-events: none;
+      mix-blend-mode: overlay;
+    }
+    .dv-display__ui {
+      position: absolute;
+      inset: 8%;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      color: var(--text);
+    }
+    .dv-display__ui-top {
+      display: flex;
+      justify-content: space-between;
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.16em;
+      color: var(--text-soft);
+    }
+    .dv-display__ui-mid {
+      align-self: center;
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: clamp(1.6rem, 4vw, 2.6rem);
+      color: var(--text);
+      line-height: 1;
+    }
+    .dv-display__ui-bot {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+      font-family: var(--font-mono);
+      font-size: 0.55rem;
+      letter-spacing: 0.16em;
+      color: var(--brass);
+    }
+    .dv-display__ui-bot::before {
+      content: "";
+      width: 6px; height: 6px;
+      background: var(--brass);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--brass-glow);
+    }
+
+    /* --- Earbuds --- */
+    .dv-buds {
+      position: relative;
+      width: 130px; aspect-ratio: 1.2;
+    }
+    .dv-buds__case {
+      position: absolute;
+      inset: 30% 0 0;
+      border-radius: 24% / 40%;
+      background:
+        radial-gradient(circle at 30% 25%, rgba(255,255,255,0.18), transparent 45%),
+        linear-gradient(180deg, #f3efe7, #c8c2b6);
+      box-shadow:
+        0 24px 50px -20px rgba(0,0,0,0.7),
+        inset 0 -10px 20px rgba(0,0,0,0.15);
+    }
+    .dv-buds__seam {
+      position: absolute;
+      top: 56%; left: 6%; right: 6%;
+      height: 1px;
+      background: rgba(0,0,0,0.18);
+    }
+    .dv-buds__bud {
+      position: absolute;
+      top: 0;
+      width: 28%;
+      aspect-ratio: 0.7;
+    }
+    .dv-buds__bud--l { left: 14%; transform: rotate(-12deg); }
+    .dv-buds__bud--r { right: 14%; transform: rotate(12deg); }
+    .dv-buds__bud-head {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; aspect-ratio: 1;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(255,255,255,0.3), transparent 50%),
+        linear-gradient(135deg, #2a2620, #0a0908);
+      border: 1px solid rgba(255,255,255,0.05);
+    }
+    .dv-buds__bud-stem {
+      position: absolute;
+      bottom: 0;
+      left: 38%;
+      width: 24%;
+      height: 60%;
+      background: linear-gradient(180deg, #2a2620, #0a0908);
+      border-radius: 0 0 6px 6px;
+    }
+
+    /* --- Bulb / Lamp --- */
+    .dv-bulb {
+      position: relative;
+      width: 110px; aspect-ratio: 0.7;
+    }
+    .dv-bulb__glow {
+      position: absolute;
+      top: 8%; left: 50%;
+      transform: translateX(-50%);
+      width: 86%; aspect-ratio: 1;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(200,158,106,0.4), transparent 65%);
+      filter: blur(8px);
+      animation: bulbPulse 4s ease-in-out infinite;
+    }
+    @keyframes bulbPulse {
+      0%, 100% { opacity: 0.65; }
+      50%      { opacity: 1; }
+    }
+    .dv-bulb__globe {
+      position: absolute;
+      top: 4%; left: 50%;
+      transform: translateX(-50%);
+      width: 78%; aspect-ratio: 1;
+      border-radius: 50% 50% 48% 48%;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(255,255,255,0.5), transparent 45%),
+        radial-gradient(circle at 50% 50%, rgba(200,158,106,0.5), rgba(15,14,11,0.85) 70%);
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow:
+        inset 0 -10px 20px rgba(0,0,0,0.4),
+        0 24px 50px -16px rgba(200,158,106,0.3);
+    }
+    .dv-bulb__neck {
+      position: absolute;
+      bottom: 12%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 30%; height: 14%;
+      background: linear-gradient(180deg, #3a352b, #1c1a14);
+      border-radius: 6px;
+    }
+    .dv-bulb__base {
+      position: absolute;
+      bottom: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 38%; height: 12%;
+      background:
+        linear-gradient(180deg, #6b563a, #2a2620);
+      border-radius: 4px;
+    }
+
+    /* --- Generated product imagery (Kie.ai / Nano Banana) --- */
+    .dv-img {
+      display: block;
+      width: 100%;
+      height: auto;
+      user-select: none;
+      -webkit-user-drag: none;
+      pointer-events: none;
+      /* Feather the dark void around the rendered product into the card */
+      -webkit-mask-image: radial-gradient(ellipse 78% 78% at 50% 52%, #000 55%, transparent 92%);
+              mask-image: radial-gradient(ellipse 78% 78% at 50% 52%, #000 55%, transparent 92%);
+    }
+
+    /* ============================================================
+       SPEC STRIP (marquee)
+       ============================================================ */
+    .strip {
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      background: var(--bg-soft);
+      overflow: hidden;
+    }
+    .strip__list {
+      display: flex;
+      gap: 3rem;
+      padding: 1rem 0;
+      white-space: nowrap;
+      animation: stripScroll 42s linear infinite;
+    }
+    .strip__list li {
+      display: inline-flex;
+      align-items: baseline;
+      gap: 0.8rem;
+      font-family: var(--font-mono);
+      font-size: 0.74rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-soft);
+    }
+    .strip__num { color: var(--brass); font-size: 0.6rem; }
+    @keyframes stripScroll {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* ============================================================
+       FEATURED — bento grid
+       ============================================================ */
+    .featured { padding: var(--section-pad) 0; position: relative; }
+    .featured__bento {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 var(--shell-pad);
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      grid-auto-rows: minmax(220px, auto);
+      gap: 1.2rem;
+    }
+    .pcard {
+      position: relative;
+      padding: 1.6rem 1.6rem 1.4rem;
+      border: 1px solid var(--line-strong);
+      border-radius: 18px;
+      background:
+        radial-gradient(120% 80% at 50% -10%, rgba(200,158,106,0.10), transparent 55%),
+        linear-gradient(165deg, rgba(255,255,255,0.04), rgba(255,255,255,0) 35%),
+        linear-gradient(180deg, #1a1813 0%, var(--surface) 100%);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 1.2rem;
+      transition: border-color 0.4s ease, transform 0.5s cubic-bezier(0.2, 0.65, 0.2, 1), box-shadow 0.5s ease;
+      isolation: isolate;
+    }
+    .pcard::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 18px;
+      padding: 1px;
+      background: linear-gradient(135deg, var(--brass), transparent 45%);
+      -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+              mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      -webkit-mask-composite: xor;
+              mask-composite: exclude;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      pointer-events: none;
+    }
+    .pcard:hover {
+      transform: translateY(-6px);
+      border-color: var(--brass-soft);
+      box-shadow:
+        0 40px 80px -30px rgba(0,0,0,0.7),
+        0 20px 50px -20px rgba(200,158,106,0.22),
+        0 0 0 1px rgba(200,158,106,0.18) inset;
+    }
+    .pcard:hover::before { opacity: 0.7; }
+
+    .pcard__tag {
+      align-self: flex-start;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.35rem 0.7rem;
+      border: 1px solid var(--line-strong);
+      border-radius: 999px;
+      font-family: var(--font-mono);
+      font-size: 0.58rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--text-mute);
+      background: rgba(255,255,255,0.02);
+    }
+    .pcard__tag-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--brass); box-shadow: 0 0 8px var(--brass-glow); }
+    .pcard__tag-dot--cool { background: var(--cool); box-shadow: 0 0 8px var(--cool); }
+
+    .pcard__visual {
+      display: grid;
+      place-items: center;
+      min-height: 180px;
+      flex: 1;
+      position: relative;
+      isolation: isolate;
+    }
+    /* Bloom: warm key light from above the product */
+    .pcard__visual::after {
+      content: "";
+      position: absolute;
+      top: -10%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 90%;
+      height: 70%;
+      background: radial-gradient(ellipse at center top, rgba(255, 220, 170, 0.18), rgba(200,158,106,0.08) 35%, transparent 65%);
+      filter: blur(18px);
+      z-index: -2;
+      opacity: 0.85;
+      transition: opacity 0.6s ease, transform 0.6s ease;
+      pointer-events: none;
+    }
+    /* Floor shadow */
+    .pcard__visual::before {
+      content: "";
+      position: absolute;
+      bottom: 6%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 62%;
+      height: 22%;
+      background: radial-gradient(ellipse, rgba(0,0,0,0.6), transparent 60%);
+      filter: blur(14px);
+      z-index: -1;
+      transition: width 0.6s ease, opacity 0.6s ease;
+    }
+    .pcard__visual > * {
+      transition: transform 0.6s cubic-bezier(0.2, 0.65, 0.2, 1), filter 0.6s ease;
+      filter: drop-shadow(0 18px 28px rgba(0,0,0,0.5));
+    }
+    .pcard:hover .pcard__visual > * {
+      transform: scale(1.06) translateY(-6px);
+      filter: drop-shadow(0 24px 36px rgba(0,0,0,0.6)) drop-shadow(0 0 22px rgba(200,158,106,0.25));
+    }
+    .pcard:hover .pcard__visual::after {
+      opacity: 1;
+      transform: translateX(-50%) scale(1.08);
+    }
+    .pcard:hover .pcard__visual::before {
+      width: 70%;
+      opacity: 0.85;
+    }
+
+    .pcard__meta {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 1.5rem;
+    }
+    .pcard__heading {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+    .pcard__kicker {
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+    }
+    .pcard__title {
+      margin: 0;
+      font-family: var(--font-display);
+      font-weight: 400;
+      font-size: clamp(1.3rem, 2vw, 1.65rem);
+      line-height: 1.1;
+      letter-spacing: -0.01em;
+      color: var(--text);
+    }
+    .pcard__title em { font-style: italic; color: var(--brass); }
+    .pcard__body {
+      margin: 0;
+      font-size: 0.85rem;
+      color: var(--text-soft);
+      line-height: 1.55;
+      max-width: 28ch;
+    }
+    .pcard__link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      align-self: flex-end;
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--brass);
+      padding: 0.5rem 0;
+      border-bottom: 1px solid var(--brass-soft);
+      transition: color 0.3s ease, border-color 0.3s ease, gap 0.3s ease;
+    }
+    .pcard__link:hover { color: var(--text); border-color: var(--text); gap: 0.7rem; }
+
+    .pcard__price {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 1.25rem;
+      color: var(--text-soft);
+    }
+
+    /* ---- Bento spans ---- */
+    .pcard--hero { grid-column: span 4; grid-row: span 2; }
+    .pcard--tall { grid-column: span 2; grid-row: span 2; }
+    .pcard--wide { grid-column: span 4; }
+    .pcard--reg  { grid-column: span 2; }
+
+    @media (max-width: 980px) {
+      .featured__bento { grid-template-columns: repeat(4, 1fr); }
+      .pcard--hero { grid-column: span 4; }
+      .pcard--tall { grid-column: span 2; grid-row: span 2; }
+      .pcard--wide { grid-column: span 4; }
+      .pcard--reg  { grid-column: span 2; }
+    }
+    @media (max-width: 640px) {
+      .featured__bento { grid-template-columns: 1fr; }
+      .pcard--hero, .pcard--tall, .pcard--wide, .pcard--reg {
+        grid-column: span 1; grid-row: auto;
+      }
+    }
+
+    /* ============================================================
+       WEARABLES — split feature (image left, text right + reverse)
+       ============================================================ */
+    .wearable {
+      padding: var(--section-pad) 0;
+      background: linear-gradient(to bottom, var(--bg) 0%, var(--bg-soft) 50%, var(--bg) 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    .wearable::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(to right, var(--line) 1px, transparent 1px),
+        linear-gradient(to bottom, var(--line) 1px, transparent 1px);
+      background-size: 72px 72px;
+      opacity: 0.35;
+      mask-image: radial-gradient(ellipse at center, black 25%, transparent 70%);
+      -webkit-mask-image: radial-gradient(ellipse at center, black 25%, transparent 70%);
+      pointer-events: none;
+    }
+    .wearable__inner {
+      position: relative;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 var(--shell-pad);
+      display: flex;
+      flex-direction: column;
+      gap: clamp(4rem, 6vw, 6rem);
+    }
+    .split {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: clamp(2rem, 4vw, 5rem);
+      align-items: center;
+    }
+    .split--reverse .split__visual { order: 2; }
+    .split__stage {
+      position: relative;
+      aspect-ratio: 5/4;
+      border-radius: 22px;
+      background:
+        radial-gradient(60% 60% at 50% 40%, rgba(200,158,106,0.18), transparent 70%),
+        linear-gradient(160deg, var(--surface), var(--bg) 100%);
+      border: 1px solid var(--line);
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      box-shadow: 0 50px 100px -40px rgba(0,0,0,0.7);
+    }
+    .split__stage::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        repeating-linear-gradient(0deg, transparent 0 71px, var(--line) 71px 72px),
+        repeating-linear-gradient(90deg, transparent 0 71px, var(--line) 71px 72px);
+      opacity: 0.5;
+    }
+    .split__stage-tick {
+      position: absolute;
+      width: 14px; height: 14px;
+      border: 1px solid var(--brass);
+    }
+    .split__stage-tick--tl { top: 12px; left: 12px; border-right: 0; border-bottom: 0; }
+    .split__stage-tick--tr { top: 12px; right: 12px; border-left: 0; border-bottom: 0; }
+    .split__stage-tick--bl { bottom: 12px; left: 12px; border-right: 0; border-top: 0; }
+    .split__stage-tick--br { bottom: 12px; right: 12px; border-left: 0; border-top: 0; }
+    .split__stage-readout {
+      position: absolute;
+      bottom: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 1.5rem;
+      font-family: var(--font-mono);
+      font-size: 0.58rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+    }
+    .split__stage-readout span:nth-child(odd) { color: var(--text-mute); }
+
+    .split__title {
+      margin: 0;
+      font-family: var(--font-display);
+      font-weight: 400;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      line-height: 1.02;
+      letter-spacing: -0.012em;
+    }
+    .split__title em { font-style: italic; color: var(--brass); }
+    .split__lede {
+      margin: 1.4rem 0 1.8rem;
+      font-size: 1rem;
+      line-height: 1.65;
+      color: var(--text-soft);
+      max-width: 36ch;
+      font-weight: 300;
+    }
+    .split__specs {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin: 1.8rem 0 2rem;
+      padding: 1.2rem 0;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+    .split__spec-key {
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+      display: block;
+      margin-bottom: 0.2rem;
+    }
+    .split__spec-val {
+      font-family: var(--font-display);
+      font-size: clamp(1rem, 1.4vw, 1.25rem);
+      color: var(--text);
+    }
+    @media (max-width: 880px) {
+      .split { grid-template-columns: 1fr; }
+      .split--reverse .split__visual { order: 0; }
+      .split__specs { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    /* ============================================================
+       LIVING — horizontal scroll gallery
+       ============================================================ */
+    .living {
+      padding: var(--section-pad) 0;
+      position: relative;
+    }
+    .living__rail {
+      position: relative;
+      padding: 0 var(--shell-pad);
+    }
+    .living__track {
+      display: flex;
+      gap: 1.2rem;
+      overflow-x: auto;
+      overflow-y: hidden;
+      scroll-snap-type: x mandatory;
+      padding-bottom: 1.5rem;
+      scrollbar-width: thin;
+      scrollbar-color: var(--brass) transparent;
+    }
+    .living__track::-webkit-scrollbar { height: 6px; }
+    .living__track::-webkit-scrollbar-track { background: var(--line); border-radius: 3px; }
+    .living__track::-webkit-scrollbar-thumb { background: var(--brass-soft); border-radius: 3px; }
+    .living__track::-webkit-scrollbar-thumb:hover { background: var(--brass); }
+
+    .lcard {
+      flex: 0 0 clamp(280px, 32vw, 420px);
+      scroll-snap-align: start;
+      position: relative;
+      padding: 1.6rem;
+      border: 1px solid var(--line-strong);
+      border-radius: 18px;
+      background: var(--surface);
+      display: flex;
+      flex-direction: column;
+      gap: 1.4rem;
+      transition: border-color 0.4s ease, transform 0.4s ease;
+      overflow: hidden;
+    }
+    .lcard:hover {
+      border-color: var(--brass-soft);
+      transform: translateY(-3px);
+    }
+    .lcard__index {
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.22em;
+      color: var(--text-faint);
+    }
+    .lcard__visual {
+      display: grid;
+      place-items: center;
+      min-height: 200px;
+      flex: 1;
+      position: relative;
+    }
+    .lcard__title {
+      margin: 0;
+      font-family: var(--font-display);
+      font-size: clamp(1.3rem, 2vw, 1.65rem);
+      letter-spacing: -0.01em;
+      line-height: 1.1;
+    }
+    .lcard__title em { font-style: italic; color: var(--brass); }
+    .lcard__body {
+      margin: 0;
+      font-size: 0.85rem;
+      color: var(--text-soft);
+      line-height: 1.55;
+    }
+    .lcard__foot {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 1rem;
+      border-top: 1px solid var(--line);
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--text-mute);
+    }
+    .lcard__foot-price { color: var(--brass); font-family: var(--font-display); font-style: italic; font-size: 1rem; letter-spacing: 0; text-transform: none; }
+
+    /* ============================================================
+       AI ASSISTANT — voice waveform feature
+       ============================================================ */
+    .ai-section {
+      padding: var(--section-pad) var(--shell-pad);
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(180deg, var(--bg) 0%, var(--bg-deep) 100%);
+    }
+    .ai-section__glow {
+      position: absolute;
+      inset: -10% -20% 0;
+      background: radial-gradient(50% 60% at 50% 40%, rgba(118, 178, 220, 0.16), transparent 70%);
+      pointer-events: none;
+    }
+    .ai-section__inner {
+      position: relative;
+      z-index: 1;
+      max-width: 1400px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+      gap: clamp(2rem, 4vw, 5rem);
+      align-items: center;
+    }
+    @media (max-width: 880px) {
+      .ai-section__inner { grid-template-columns: 1fr; }
+    }
+
+    /* Waveform visualizer */
+    .waveform {
+      position: relative;
+      aspect-ratio: 5/4;
+      border-radius: 22px;
+      border: 1px solid var(--line-strong);
+      background:
+        radial-gradient(60% 60% at 50% 50%, rgba(118,178,220,0.12), transparent 70%),
+        linear-gradient(180deg, var(--surface), var(--bg) 100%);
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      box-shadow: 0 50px 100px -40px rgba(0,0,0,0.7);
+    }
+    .waveform__bars {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      width: 76%;
+      height: 50%;
+    }
+    .waveform__bar {
+      flex: 1;
+      background: linear-gradient(180deg, var(--cool), rgba(118,178,220,0.5));
+      border-radius: 999px;
+      animation: waveform 1.4s ease-in-out infinite;
+      box-shadow: 0 0 12px rgba(118,178,220,0.5);
+      transform-origin: center;
+    }
+    .waveform__bar:nth-child(1)  { animation-delay: 0.0s; }
+    .waveform__bar:nth-child(2)  { animation-delay: 0.08s; }
+    .waveform__bar:nth-child(3)  { animation-delay: 0.16s; }
+    .waveform__bar:nth-child(4)  { animation-delay: 0.24s; }
+    .waveform__bar:nth-child(5)  { animation-delay: 0.32s; }
+    .waveform__bar:nth-child(6)  { animation-delay: 0.40s; }
+    .waveform__bar:nth-child(7)  { animation-delay: 0.48s; }
+    .waveform__bar:nth-child(8)  { animation-delay: 0.56s; }
+    .waveform__bar:nth-child(9)  { animation-delay: 0.48s; }
+    .waveform__bar:nth-child(10) { animation-delay: 0.40s; }
+    .waveform__bar:nth-child(11) { animation-delay: 0.32s; }
+    .waveform__bar:nth-child(12) { animation-delay: 0.24s; }
+    .waveform__bar:nth-child(13) { animation-delay: 0.16s; }
+    .waveform__bar:nth-child(14) { animation-delay: 0.08s; }
+    .waveform__bar:nth-child(15) { animation-delay: 0.0s; }
+    @keyframes waveform {
+      0%, 100% { transform: scaleY(0.2); opacity: 0.6; }
+      50%      { transform: scaleY(1);   opacity: 1; }
+    }
+    .waveform__prompt {
+      position: absolute;
+      top: 1.5rem; left: 1.5rem; right: 1.5rem;
+      display: flex;
+      gap: 0.7rem;
+      align-items: center;
+      font-family: var(--font-mono);
+      font-size: 0.66rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-mute);
+    }
+    .waveform__prompt-dot {
+      width: 8px; height: 8px;
+      background: var(--cool);
+      border-radius: 50%;
+      box-shadow: 0 0 10px var(--cool);
+      animation: dotPulse 1.5s ease-in-out infinite;
+    }
+    @keyframes dotPulse {
+      0%, 100% { transform: scale(1); }
+      50%      { transform: scale(1.4); }
+    }
+    .waveform__transcript {
+      position: absolute;
+      bottom: 1.6rem;
+      left: 1.6rem; right: 1.6rem;
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: clamp(1rem, 1.6vw, 1.35rem);
+      line-height: 1.4;
+      color: var(--text);
+      text-align: left;
+    }
+    .waveform__transcript span { color: var(--brass); }
+
+    .ai-section__capabilities {
+      list-style: none;
+      margin: 2rem 0 2.4rem;
+      padding: 0;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+    .ai-section__capabilities li {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      padding: 1rem 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .ai-section__capabilities li:first-child { border-top: 1px solid var(--line); }
+    .ai-section__capabilities li::before {
+      content: counter(cap, decimal-leading-zero);
+      counter-increment: cap;
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.18em;
+      color: var(--brass);
+      padding-top: 0.2rem;
+      min-width: 2rem;
+    }
+    .ai-section__capabilities {
+      counter-reset: cap;
+    }
+    .ai-section__cap-title {
+      display: block;
+      font-family: var(--font-display);
+      font-size: clamp(1.05rem, 1.4vw, 1.2rem);
+      color: var(--text);
+      margin-bottom: 0.2rem;
+    }
+    .ai-section__cap-body {
+      font-size: 0.88rem;
+      color: var(--text-soft);
+      line-height: 1.55;
+    }
+
+    /* ============================================================
+       FUTURE TECH — timeline cards
+       ============================================================ */
+    .future {
+      padding: var(--section-pad) var(--shell-pad);
+      position: relative;
+    }
+    .future__inner { max-width: 1400px; margin: 0 auto; }
+    .future__rail {
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.2rem;
+      margin-top: 3rem;
+    }
+    .future__rail::before {
+      content: "";
+      position: absolute;
+      top: 30px;
+      left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--line-strong) 10%, var(--line-strong) 90%, transparent);
+    }
+    .fcard {
+      position: relative;
+      padding: 0 1rem;
+    }
+    .fcard__node {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--bg);
+      border: 1px solid var(--brass);
+      position: relative;
+      margin-bottom: 2rem;
+      box-shadow: 0 0 0 4px rgba(10,9,8,1), 0 0 16px var(--brass-glow);
+    }
+    .fcard__node::after {
+      content: "";
+      position: absolute;
+      inset: 3px;
+      border-radius: 50%;
+      background: var(--brass);
+    }
+    .fcard__date {
+      font-family: var(--font-mono);
+      font-size: 0.66rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--text-mute);
+      margin-bottom: 0.6rem;
+    }
+    .fcard__title {
+      margin: 0 0 0.7rem;
+      font-family: var(--font-display);
+      font-weight: 400;
+      font-size: clamp(1.3rem, 1.8vw, 1.55rem);
+      line-height: 1.15;
+      letter-spacing: -0.01em;
+    }
+    .fcard__title em { font-style: italic; color: var(--brass); }
+    .fcard__body {
+      margin: 0;
+      font-size: 0.88rem;
+      color: var(--text-soft);
+      line-height: 1.55;
+    }
+    .fcard__status {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      margin-top: 1.2rem;
+      font-family: var(--font-mono);
+      font-size: 0.58rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--brass);
+    }
+    .fcard__status::before {
+      content: "";
+      width: 5px; height: 5px;
+      background: var(--brass);
+      border-radius: 50%;
+      box-shadow: 0 0 6px var(--brass-glow);
+    }
+    @media (max-width: 880px) {
+      .future__rail { grid-template-columns: repeat(2, 1fr); }
+      .future__rail::before { display: none; }
+    }
+    @media (max-width: 540px) {
+      .future__rail { grid-template-columns: 1fr; }
+    }
+
+    /* ============================================================
+       CTA
+       ============================================================ */
+    .cta {
+      padding: var(--section-pad) var(--shell-pad);
+      background: linear-gradient(to bottom, var(--bg) 0%, var(--bg-soft) 100%);
+      position: relative;
+      isolation: isolate;
+      overflow: hidden;
+    }
+    .cta::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      background:
+        radial-gradient(50% 50% at 50% 100%, rgba(200,158,106,0.18), transparent 70%);
+    }
+    .cta__inner {
+      max-width: 56rem;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .cta__inner .eyebrow { justify-content: center; }
+    .cta__title {
+      margin: 0;
+      font-family: var(--font-display);
+      font-weight: 400;
+      font-size: clamp(2.5rem, 6vw, 5rem);
+      line-height: 0.98;
+      letter-spacing: -0.015em;
+    }
+    .cta__title em { font-style: italic; color: var(--brass); }
+    .cta__lede {
+      max-width: 36rem;
+      margin: 1.6rem auto 2.4rem;
+      color: var(--text-soft);
+      font-weight: 300;
+      line-height: 1.65;
+    }
+    .cta__row { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
+
+    .newsletter {
+      max-width: 28rem;
+      margin: 2.4rem auto 0;
+      display: flex;
+      gap: 0.5rem;
+      padding: 0.5rem;
+      border: 1px solid var(--line-strong);
+      border-radius: 999px;
+      background: rgba(255,255,255,0.02);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+    .newsletter__input {
+      flex: 1;
+      background: transparent;
+      border: 0;
+      outline: 0;
+      padding: 0.7rem 1rem;
+      color: var(--text);
+      font: inherit;
+      font-size: 0.9rem;
+    }
+    .newsletter__input::placeholder { color: var(--text-faint); }
+    .newsletter__btn {
+      padding: 0.7rem 1.2rem;
+      background: var(--brass);
+      color: var(--bg);
+      border: 0;
+      border-radius: 999px;
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    .newsletter__btn:hover { background: #d8b07e; }
+
+    /* ============================================================
+       FOOTER
+       ============================================================ */
+    .footer {
+      padding: clamp(3.5rem, 6vw, 5rem) var(--shell-pad) clamp(1.5rem, 3vw, 2.5rem);
+      background: var(--bg-deep);
+      border-top: 1px solid var(--line);
+    }
+    .footer__top {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) repeat(3, minmax(0, 1fr));
+      gap: 2rem;
+      padding-bottom: clamp(2.5rem, 4vw, 4rem);
+      border-bottom: 1px solid var(--line);
+    }
+    .footer__brand-block { display: flex; flex-direction: column; gap: 0.8rem; max-width: 28ch; }
+    .footer__mark {
+      display: inline-flex;
+      align-items: baseline;
+      gap: 0.6rem;
+    }
+    .footer__mark-letter {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 1.6rem;
+      color: var(--brass);
+    }
+    .footer__mark-name {
+      font-family: var(--font-mono);
+      font-size: 0.74rem;
+      letter-spacing: 0.32em;
+    }
+    .footer__tag {
+      margin: 0;
+      color: var(--text-mute);
+      font-size: 0.92rem;
+      line-height: 1.5;
+    }
+    .footer__col-title {
+      font-family: var(--font-mono);
+      font-size: 0.66rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+      margin-bottom: 1rem;
+    }
+    .footer__col ul li {
+      padding: 0.3rem 0;
+      font-size: 0.92rem;
+      color: var(--text-soft);
+    }
+    .footer__col ul li a {
+      transition: color 0.3s ease;
+    }
+    .footer__col ul li a:hover { color: var(--brass); }
+
+    .footer__bottom {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding-top: clamp(1.5rem, 3vw, 2rem);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+    }
+    .footer__social { display: flex; gap: 1rem; }
+    .footer__social a {
+      width: 36px; height: 36px;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--line-strong);
+      border-radius: 50%;
+      color: var(--text-soft);
+      transition: color 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+    }
+    .footer__social a:hover { color: var(--brass); border-color: var(--brass); transform: translateY(-1px); }
+
+    @media (max-width: 880px) {
+      .footer__top { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 540px) {
+      .footer__top { grid-template-columns: 1fr; }
+    }
+
+    /* ============================================================
+       WELCOME — warm intro strip
+       ============================================================ */
+    .welcome {
+      position: relative;
+      padding: clamp(4rem, 7vw, 6.5rem) var(--shell-pad);
+      background:
+        radial-gradient(60% 80% at 20% 50%, rgba(200,158,106,0.10), transparent 70%),
+        linear-gradient(180deg, var(--bg) 0%, #100e0b 100%);
+      overflow: hidden;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+    .welcome__inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+      gap: clamp(2rem, 5vw, 5rem);
+      align-items: start;
+    }
+    .welcome__hi {
+      display: inline-flex;
+      align-items: baseline;
+      gap: 0.5rem;
+      margin: 0 0 1.4rem;
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: clamp(1.1rem, 1.4vw, 1.3rem);
+      color: var(--brass);
+      letter-spacing: -0.01em;
+    }
+    .welcome__hi-mark {
+      font-family: var(--font-mono);
+      font-style: normal;
+      font-size: 0.7rem;
+      color: var(--text-faint);
+      letter-spacing: 0.22em;
+      transform: translateY(-2px);
+    }
+    .welcome__title {
+      margin: 0;
+      font-family: var(--font-display);
+      font-weight: 400;
+      font-size: clamp(2.2rem, 4.8vw, 4rem);
+      line-height: 1.02;
+      letter-spacing: -0.015em;
+      color: var(--text);
+    }
+    .welcome__title em { font-style: italic; color: var(--brass); }
+    .welcome__lede {
+      margin: 1.4rem 0 0;
+      max-width: 36ch;
+      color: var(--text-soft);
+      font-weight: 300;
+      line-height: 1.7;
+      font-size: 1.05rem;
+    }
+    .welcome__points {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      counter-reset: pt;
+    }
+    .welcome__points li {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 1.2rem 1.6rem;
+      align-items: baseline;
+      padding: 1.4rem 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .welcome__points li:first-child { border-top: 1px solid var(--line); }
+    .welcome__points-num {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.22em;
+      color: var(--brass);
+      grid-row: span 2;
+    }
+    .welcome__points h3 {
+      margin: 0 0 0.4rem;
+      font-family: var(--font-display);
+      font-weight: 400;
+      font-size: clamp(1.15rem, 1.5vw, 1.35rem);
+      color: var(--text);
+      letter-spacing: -0.01em;
+      line-height: 1.2;
+    }
+    .welcome__points p {
+      margin: 0;
+      color: var(--text-soft);
+      font-size: 0.92rem;
+      line-height: 1.55;
+      max-width: 38ch;
+      font-weight: 300;
+    }
+    @media (max-width: 880px) {
+      .welcome__inner { grid-template-columns: 1fr; }
+    }
+
+    /* ============================================================
+       A DAY WITH TESTER — lifestyle storytelling
+       ============================================================ */
+    .day {
+      padding: var(--section-pad) 0;
+      background:
+        radial-gradient(40% 50% at 80% 30%, rgba(255, 200, 130, 0.06), transparent 70%),
+        radial-gradient(40% 50% at 15% 80%, rgba(118, 178, 220, 0.05), transparent 70%),
+        var(--bg);
+      position: relative;
+      overflow: hidden;
+    }
+    .day__grid {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 var(--shell-pad);
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.2rem;
+    }
+    .day__scene {
+      position: relative;
+      border: 1px solid var(--line-strong);
+      border-radius: 18px;
+      overflow: hidden;
+      background: var(--surface);
+      transition: transform 0.5s cubic-bezier(0.2, 0.65, 0.2, 1), box-shadow 0.5s ease, border-color 0.4s ease;
+      isolation: isolate;
+      display: flex;
+      flex-direction: column;
+    }
+    .day__scene:hover {
+      transform: translateY(-4px);
+      border-color: var(--brass-soft);
+      box-shadow: 0 30px 60px -30px rgba(0,0,0,0.7), 0 14px 40px -20px rgba(200,158,106,0.2);
+    }
+    .day__scene-art {
+      position: relative;
+      aspect-ratio: 4/3;
+      overflow: hidden;
+    }
+    .day__scene-time {
+      position: absolute;
+      top: 1.2rem;
+      left: 1.2rem;
+      z-index: 2;
+      font-family: var(--font-mono);
+      font-size: 0.66rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--text);
+      padding: 0.35rem 0.7rem;
+      background: rgba(10, 9, 8, 0.6);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid var(--line-strong);
+      border-radius: 999px;
+      margin: 0;
+    }
+    .day__scene-copy {
+      padding: 1.4rem 1.6rem 1.6rem;
+    }
+    .day__scene-title {
+      margin: 0 0 0.5rem;
+      font-family: var(--font-display);
+      font-weight: 400;
+      font-size: clamp(1.3rem, 1.8vw, 1.55rem);
+      line-height: 1.15;
+      letter-spacing: -0.01em;
+    }
+    .day__scene-title em { font-style: italic; color: var(--brass); }
+    .day__scene-body {
+      margin: 0;
+      color: var(--text-soft);
+      font-size: 0.92rem;
+      line-height: 1.6;
+      font-weight: 300;
+    }
+
+    /* Scene 1: Morning — sunrise gradient + watch silhouette */
+    .day__art--morning {
+      background:
+        radial-gradient(circle at 75% 78%, rgba(255, 200, 130, 0.55), transparent 35%),
+        linear-gradient(180deg, #0a0908 0%, #1a140b 40%, #3a2614 75%, #c89e6a 100%);
+    }
+    .day__art--morning::before {
+      content: "";
+      position: absolute;
+      bottom: 18%; right: 18%;
+      width: 22%; aspect-ratio: 1;
+      border-radius: 50%;
+      background: radial-gradient(circle, #fff2d4 0%, #f6c98a 35%, transparent 70%);
+      box-shadow: 0 0 60px 20px rgba(246,201,138,0.4);
+    }
+    .day__art--morning::after {
+      content: "";
+      position: absolute;
+      left: 50%; top: 38%;
+      transform: translateX(-50%);
+      width: 26%; aspect-ratio: 0.55;
+      background: linear-gradient(180deg, #1a1812, #050403);
+      border-radius: 24% / 14%;
+      box-shadow:
+        inset 0 0 0 2px rgba(255,255,255,0.08),
+        0 16px 28px rgba(0,0,0,0.5);
+    }
+    .day__art--morning .day__art-line {
+      position: absolute;
+      left: 0; right: 0; bottom: 24%;
+      height: 1px;
+      background: linear-gradient(to right, transparent, rgba(255,200,130,0.4), transparent);
+    }
+
+    /* Scene 2: Focus — desk with display + glasses cue */
+    .day__art--focus {
+      background:
+        radial-gradient(circle at 50% 45%, rgba(118, 178, 220, 0.10), transparent 70%),
+        linear-gradient(180deg, #0a0908 0%, #14130e 60%, #1a1812 100%);
+    }
+    .day__art--focus::before {
+      content: "";
+      position: absolute;
+      bottom: 22%; left: 50%;
+      transform: translateX(-50%);
+      width: 56%; aspect-ratio: 1.6;
+      border-radius: 8px;
+      background:
+        linear-gradient(180deg, rgba(118,178,220,0.18), rgba(200,158,106,0.08) 50%, #0a0908 100%);
+      border: 1px solid var(--line-strong);
+      box-shadow:
+        inset 0 0 0 4px #0a0908,
+        inset 0 0 24px rgba(118,178,220,0.12),
+        0 20px 30px rgba(0,0,0,0.5);
+    }
+    .day__art--focus::after {
+      content: "";
+      position: absolute;
+      bottom: 12%; left: 50%;
+      transform: translateX(-50%);
+      width: 70%; height: 2%;
+      background: linear-gradient(180deg, #c89e6a, #6b563a);
+      border-radius: 2px;
+    }
+    .day__art--focus .day__art-glasses {
+      position: absolute;
+      top: 14%; left: 50%;
+      transform: translateX(-50%);
+      width: 38%;
+      aspect-ratio: 2.6;
+    }
+    .day__art--focus .day__art-glasses span:nth-child(1),
+    .day__art--focus .day__art-glasses span:nth-child(2) {
+      position: absolute;
+      top: 18%;
+      width: 38%;
+      aspect-ratio: 1.1;
+      border-radius: 32% 32% 38% 38%;
+      background:
+        radial-gradient(ellipse at 30% 25%, rgba(255,255,255,0.4), transparent 40%),
+        linear-gradient(135deg, #2a2620 0%, #0a0908 100%);
+      border: 1.5px solid #1a1812;
+    }
+    .day__art--focus .day__art-glasses span:nth-child(1) { left: 4%; }
+    .day__art--focus .day__art-glasses span:nth-child(2) { right: 4%; }
+    .day__art--focus .day__art-glasses span:nth-child(3) {
+      position: absolute;
+      top: 40%; left: 50%;
+      transform: translateX(-50%);
+      width: 16%; height: 6%;
+      background: #2a2620;
+      border-radius: 3px;
+    }
+
+    /* Scene 3: Evening — amber lamp + speaker tones */
+    .day__art--evening {
+      background:
+        radial-gradient(circle at 30% 70%, rgba(200, 158, 106, 0.35), transparent 50%),
+        radial-gradient(circle at 75% 30%, rgba(118, 178, 220, 0.06), transparent 55%),
+        linear-gradient(180deg, #0a0908 0%, #1f1610 100%);
+    }
+    .day__art--evening::before {
+      content: "";
+      position: absolute;
+      top: 16%; left: 30%;
+      transform: translateX(-50%);
+      width: 22%; aspect-ratio: 0.95;
+      border-radius: 50% 50% 48% 48%;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(255,255,255,0.4), transparent 50%),
+        radial-gradient(circle at 50% 50%, rgba(255, 200, 130, 0.5), rgba(15,14,11,0.85) 70%);
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: 0 0 40px rgba(255,200,130,0.4);
+      animation: bulbPulse 4s ease-in-out infinite;
+    }
+    .day__art--evening::after {
+      content: "";
+      position: absolute;
+      bottom: 14%; right: 18%;
+      width: 24%; aspect-ratio: 0.85;
+      border-radius: 50% 50% 22% 22% / 18% 18% 14% 14%;
+      background:
+        radial-gradient(ellipse at 30% 20%, rgba(255,255,255,0.16), transparent 50%),
+        linear-gradient(180deg, #2a2620 0%, #15140f 60%, #0a0908 100%);
+      border: 1px solid rgba(255,255,255,0.06);
+      box-shadow:
+        0 20px 30px rgba(0,0,0,0.7),
+        inset 0 -10px 16px rgba(0,0,0,0.4);
+    }
+
+    @media (max-width: 880px) {
+      .day__grid { grid-template-columns: 1fr; }
+    }
+
+    /* ============================================================
+       PRESS / TESTIMONIALS
+       ============================================================ */
+    .press {
+      padding: var(--section-pad) var(--shell-pad);
+      position: relative;
+      overflow: hidden;
+    }
+    .press__logos {
+      max-width: 1400px;
+      margin: 0 auto clamp(3rem, 5vw, 4rem);
+      padding: 1.5rem 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 2rem 3rem;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+    .press__logos li {
+      font-family: var(--font-display);
+      font-weight: 400;
+      font-size: clamp(1rem, 1.4vw, 1.3rem);
+      letter-spacing: 0.16em;
+      color: var(--text-mute);
+      transition: color 0.3s ease, letter-spacing 0.3s ease;
+      text-transform: uppercase;
+    }
+    .press__logos li:hover {
+      color: var(--brass);
+      letter-spacing: 0.22em;
+    }
+    .press__logos li em {
+      font-style: italic;
+      color: var(--brass);
+      margin-right: 0.2em;
+    }
+    .press__grid {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.2rem;
+    }
+    .qcard {
+      position: relative;
+      padding: 2rem 1.8rem 1.8rem;
+      border: 1px solid var(--line-strong);
+      border-radius: 18px;
+      background:
+        radial-gradient(120% 60% at 50% -10%, rgba(200,158,106,0.10), transparent 60%),
+        linear-gradient(180deg, #1a1813 0%, var(--surface) 100%);
+      transition: border-color 0.4s ease, transform 0.4s ease, box-shadow 0.4s ease;
+    }
+    .qcard:hover {
+      transform: translateY(-3px);
+      border-color: var(--brass-soft);
+      box-shadow: 0 30px 60px -30px rgba(0,0,0,0.7);
+    }
+    .qcard__mark {
+      position: absolute;
+      top: 0.6rem;
+      right: 1.2rem;
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 3.5rem;
+      color: var(--brass);
+      opacity: 0.18;
+      line-height: 1;
+      user-select: none;
+      pointer-events: none;
+    }
+    .qcard__stars {
+      display: inline-flex;
+      gap: 2px;
+      margin-bottom: 1.2rem;
+      color: var(--brass);
+      font-size: 0.95rem;
+      letter-spacing: 0.1em;
+    }
+    .qcard__quote {
+      margin: 0 0 1.4rem;
+      font-family: var(--font-display);
+      font-size: clamp(1.05rem, 1.4vw, 1.25rem);
+      line-height: 1.45;
+      color: var(--text);
+      letter-spacing: -0.005em;
+    }
+    .qcard__quote em { font-style: italic; color: var(--brass); }
+    .qcard__attr {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      padding-top: 1.2rem;
+      border-top: 1px solid var(--line);
+    }
+    .qcard__avatar {
+      flex: 0 0 auto;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 30% 25%, rgba(255,255,255,0.25), transparent 50%),
+        linear-gradient(135deg, var(--brass), #6b563a);
+      display: grid;
+      place-items: center;
+      font-family: var(--font-display);
+      font-style: italic;
+      color: var(--bg);
+      font-size: 1rem;
+      box-shadow: inset 0 -4px 8px rgba(0,0,0,0.3);
+    }
+    .qcard__attr-text {
+      display: flex;
+      flex-direction: column;
+      gap: 0.1rem;
+    }
+    .qcard__name {
+      font-family: var(--font-body);
+      font-weight: 500;
+      font-size: 0.88rem;
+      color: var(--text);
+    }
+    .qcard__role {
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--text-mute);
+    }
+    @media (max-width: 880px) {
+      .press__grid { grid-template-columns: 1fr; }
+      .press__logos { justify-content: center; }
+    }
+
+    /* ============================================================
+       FAQ accordion
+       ============================================================ */
+    .faq {
+      padding: var(--section-pad) var(--shell-pad);
+      background: linear-gradient(180deg, var(--bg) 0%, var(--bg-soft) 100%);
+      border-top: 1px solid var(--line);
+    }
+    .faq__inner { max-width: 920px; margin: 0 auto; }
+    .faq__list {
+      margin-top: 2.5rem;
+      border-top: 1px solid var(--line);
+    }
+    .faq__item {
+      border-bottom: 1px solid var(--line);
+      transition: background 0.3s ease;
+    }
+    .faq__item[open] {
+      background: rgba(200, 158, 106, 0.03);
+    }
+    .faq__item summary {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 1.4rem 0.5rem 1.4rem 0;
+      cursor: pointer;
+      list-style: none;
+      font-family: var(--font-display);
+      font-size: clamp(1.05rem, 1.5vw, 1.3rem);
+      letter-spacing: -0.005em;
+      color: var(--text);
+      transition: color 0.3s ease, padding 0.3s ease;
+    }
+    .faq__item summary::-webkit-details-marker { display: none; }
+    .faq__item summary:hover { color: var(--brass); padding-left: 0.5rem; }
+    .faq__item[open] summary { color: var(--brass); }
+    .faq__item summary::after {
+      content: "";
+      flex: 0 0 auto;
+      width: 28px; height: 28px;
+      border: 1px solid var(--line-strong);
+      border-radius: 50%;
+      background:
+        linear-gradient(currentColor, currentColor) center / 12px 1px no-repeat,
+        linear-gradient(currentColor, currentColor) center / 1px 12px no-repeat;
+      transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), background-size 0.4s ease, border-color 0.3s ease;
+    }
+    .faq__item summary:hover::after { border-color: var(--brass); }
+    .faq__item[open] summary::after {
+      transform: rotate(45deg);
+      border-color: var(--brass);
+    }
+    .faq__answer {
+      padding: 0 2.5rem 1.6rem 0;
+      color: var(--text-soft);
+      font-size: 0.98rem;
+      line-height: 1.65;
+      max-width: 60ch;
+      font-weight: 300;
+      animation: faqOpen 0.5s cubic-bezier(0.2, 0.65, 0.2, 1);
+    }
+    .faq__answer em { font-style: italic; color: var(--brass); }
+    @keyframes faqOpen {
+      from { opacity: 0; transform: translateY(-4px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .faq__cta {
+      margin-top: 3rem;
+      padding: 1.6rem 1.8rem;
+      border: 1px solid var(--line-strong);
+      border-radius: 14px;
+      background: rgba(255,255,255,0.015);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+    .faq__cta-text { color: var(--text-soft); margin: 0; }
+    .faq__cta-text strong { color: var(--text); font-weight: 500; }
+    .faq__cta a {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--brass);
+      padding-bottom: 2px;
+      border-bottom: 1px solid var(--brass-soft);
+      transition: color 0.3s ease, gap 0.3s ease;
+    }
+    .faq__cta a:hover { color: var(--text); gap: 0.7rem; }
+
+    /* ============================================================
+       REVEAL ANIMATIONS
+       ============================================================ */
+    [data-reveal] {
+      opacity: 0;
+      transform: translateY(24px);
+      transition:
+        opacity 0.9s cubic-bezier(0.2, 0.65, 0.2, 1),
+        transform 0.9s cubic-bezier(0.2, 0.65, 0.2, 1);
+      transition-delay: var(--reveal-delay, 0ms);
+      will-change: opacity, transform;
+    }
+    [data-reveal].is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ============================================================
+       SIGHTS — landing-page teaser linking to Sights.html
+       ============================================================ */
+    .sights {
+      position: relative;
+      padding: var(--section-pad) 0;
+      background:
+        radial-gradient(80% 60% at 50% 0%, rgba(200,158,106,0.12), transparent 70%),
+        linear-gradient(180deg, var(--bg-deep) 0%, var(--bg) 100%);
+      overflow: hidden;
+      isolation: isolate;
+    }
+    .sights::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(to right, var(--line) 1px, transparent 1px),
+        linear-gradient(to bottom, var(--line) 1px, transparent 1px);
+      background-size: 84px 84px;
+      opacity: 0.32;
+      mask-image: radial-gradient(ellipse at 50% 30%, black 5%, transparent 75%);
+      -webkit-mask-image: radial-gradient(ellipse at 50% 30%, black 5%, transparent 75%);
+      pointer-events: none;
+      z-index: -1;
+    }
+    .sights__inner {
+      position: relative;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 var(--shell-pad);
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+      gap: clamp(2rem, 5vw, 5rem);
+      align-items: center;
+    }
+    .sights__copy { max-width: 38rem; }
+    .sights__title {
+      margin: 0;
+      font-family: var(--font-display);
+      font-weight: 400;
+      font-size: clamp(2.4rem, 5.4vw, 4.6rem);
+      line-height: 1.02;
+      letter-spacing: -0.015em;
+    }
+    .sights__title em { font-style: italic; color: var(--brass); }
+    .sights__lede {
+      margin: 1.6rem 0 2rem;
+      font-size: 1rem;
+      font-weight: 300;
+      color: var(--text-soft);
+      line-height: 1.65;
+      max-width: 36rem;
+    }
+    .sights__meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.4rem 2rem;
+      padding: 1.2rem 0;
+      margin: 0 0 2rem;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+    .sights__meta-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+    .sights__meta-key {
+      font-family: var(--font-mono);
+      font-size: 0.58rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+    }
+    .sights__meta-val {
+      font-family: var(--font-display);
+      font-size: 1.05rem;
+      color: var(--text);
+    }
+    .sights__cta-row { display: flex; flex-wrap: wrap; gap: 0.8rem; }
+
+    .sights__stage {
+      position: relative;
+      aspect-ratio: 1 / 1;
+      border-radius: 22px;
+      overflow: hidden;
+      border: 1px solid var(--line-strong);
+      background: #000;
+      box-shadow:
+        0 60px 120px -40px rgba(0,0,0,0.85),
+        0 0 0 1px rgba(255,255,255,0.02) inset;
+    }
+    .sights__stage-img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: opacity 0.9s ease;
+    }
+    .sights__stage-img--end {
+      opacity: 0;
+      animation: sightsTeaserBlink 9s ease-in-out infinite;
+    }
+    @keyframes sightsTeaserBlink {
+      0%, 45%   { opacity: 0; }
+      55%, 95%  { opacity: 1; }
+      100%      { opacity: 0; }
+    }
+    .sights__stage-readout {
+      position: absolute;
+      left: 1.1rem;
+      bottom: 1.1rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.45rem 0.8rem;
+      border-radius: 999px;
+      background: rgba(0,0,0,0.55);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid var(--line-strong);
+      font-family: var(--font-mono);
+      font-size: 0.58rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--text-soft);
+      z-index: 2;
+    }
+    .sights__stage-readout::before {
+      content: "";
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--brass);
+      box-shadow: 0 0 8px var(--brass-glow);
+    }
+    .sights__stage-tick {
+      position: absolute;
+      width: 18px; height: 18px;
+      border: 1px solid var(--brass-soft);
+      pointer-events: none;
+    }
+    .sights__stage-tick--tl { top: 14px; left: 14px;  border-right: 0; border-bottom: 0; }
+    .sights__stage-tick--tr { top: 14px; right: 14px; border-left: 0;  border-bottom: 0; }
+    .sights__stage-tick--bl { bottom: 14px; left: 14px;  border-right: 0; border-top: 0; }
+    .sights__stage-tick--br { bottom: 14px; right: 14px; border-left: 0;  border-top: 0; }
+
+    @media (max-width: 880px) {
+      .sights__inner { grid-template-columns: 1fr; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+      [data-reveal] { opacity: 1; transform: none; }
+      html { scroll-behavior: auto; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Atmospheric layers -->
+  <div class="grain" aria-hidden="true"></div>
+  <div class="vignette" aria-hidden="true"></div>
+
+  <!-- Sticky nav -->
+  <header class="nav" id="nav">
+    <a href="product.html" class="nav__brand" aria-label="Tester home">
+      <span class="nav__mark">T</span>
+      <span class="nav__wordmark">TESTER</span>
+      <span class="nav__edition">Tech&nbsp;/ 2026</span>
+    </a>
+
+    <nav class="nav__links" aria-label="Primary">
+      <a href="#featured">Featured</a>
+      <a href="#wearables">Wearables</a>
+      <a href="#living">Living</a>
+      <a href="#ai">AI</a>
+      <a href="#sights">Sights</a>
+      <a href="#future">Future</a>
+    </nav>
+
+    <a href="product.html" class="nav__cta">
+      <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true">
+        <path d="M12 7H2M6 3L2 7l4 4" stroke="currentColor" stroke-width="1.4" fill="none" stroke-linecap="square" />
+      </svg>
+      <span>Watch Pro</span>
+    </a>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero" id="top">
+    <div class="hero__stage">
+    <div class="hero__bg" aria-hidden="true"></div>
+    <div class="hero__grid" aria-hidden="true"></div>
+    <div class="hero__corners" aria-hidden="true">
+      <span class="hero__corner hero__corner--tl"></span>
+      <span class="hero__corner hero__corner--tr"></span>
+      <span class="hero__corner hero__corner--bl"></span>
+      <span class="hero__corner hero__corner--br"></span>
+    </div>
+
+    <div class="hero__inner">
+      <div class="hero__copy">
+        <p class="eyebrow" data-reveal>
+          <span class="eyebrow__dot"></span>
+          Tester Tech <span class="eyebrow__sep">/</span> Edition&nbsp;01
+        </p>
+        <h1 class="hero__title">
+          <span data-reveal data-reveal-delay="80">One signal.</span>
+          <span class="hero__title-italic" data-reveal data-reveal-delay="180">Every device.</span>
+        </h1>
+        <p class="hero__tagline" data-reveal data-reveal-delay="320">
+          A connected family of instruments &mdash; smartwatches, smart glasses, ambient
+          assistants, the lights and locks you forget about. One mesh, one privacy ledger,
+          one design language. Built in Berlin for the way you actually live.
+        </p>
+        <div class="hero__cta-row" data-reveal data-reveal-delay="440">
+          <a href="#featured" class="btn btn--primary">
+            <span>Browse the family</span>
+            <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
+              <path d="M3 8h10M9 3l5 5-5 5" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="square" />
+            </svg>
+          </a>
+          <a href="#ai" class="btn btn--ghost">
+            <span>See it in motion</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="hero__cluster" aria-hidden="true">
+        <div class="hero__cluster-floor"></div>
+
+        <div class="hero__device hero__device--watch" style="width: 170px;">
+          <img class="dv-img" src="assets/testertech/watch-pro.png" alt="" width="170" loading="eager" />
+        </div>
+
+        <div class="hero__device hero__device--glasses" style="width: 200px;">
+          <img class="dv-img" src="assets/testertech/lens-01.png" alt="" width="200" loading="eager" />
+        </div>
+
+        <div class="hero__device hero__device--speaker" style="width: 160px;">
+          <img class="dv-img" src="assets/testertech/echo-field.png" alt="" width="160" loading="eager" />
+        </div>
+
+        <div class="hero__device hero__device--ring" style="width: 140px;">
+          <img class="dv-img" src="assets/testertech/loop-ring.png" alt="" width="140" loading="eager" />
+        </div>
+      </div>
+    </div>
+    </div><!-- /.hero__stage -->
+  </section>
+
+  <!-- WELCOME — warmer human voice -->
+  <section class="welcome" aria-label="Welcome">
+    <div class="welcome__inner">
+      <div>
+        <p class="welcome__hi" data-reveal>
+          <span class="welcome__hi-mark">~</span>
+          Hello, and welcome in.
+        </p>
+        <h2 class="welcome__title" data-reveal data-reveal-delay="80">
+          You&rsquo;re in the<br/><em>family&nbsp;room.</em>
+        </h2>
+        <p class="welcome__lede" data-reveal data-reveal-delay="180">
+          Tester Tech is the rest of what we make &mdash; the things that live around
+          the watch. Take your time. There&rsquo;s no add-to-cart hidden in here, and
+          nobody&rsquo;s tracking you.
+        </p>
+      </div>
+
+      <ol class="welcome__points" data-reveal data-reveal-delay="220">
+        <li>
+          <span class="welcome__points-num">01</span>
+          <h3>Browse like a magazine.</h3>
+          <p>Each device has a quiet file. Read what you want, skip what you don&rsquo;t. Nothing demands a click.</p>
+        </li>
+        <li>
+          <span class="welcome__points-num">02</span>
+          <h3>One mesh, one ledger.</h3>
+          <p>Every Tester device speaks the same protocol and writes to the same privacy journal &mdash; one you can read.</p>
+        </li>
+        <li>
+          <span class="welcome__points-num">03</span>
+          <h3>A small studio in Berlin.</h3>
+          <p>Eleven of us. We answer our own email. If something here speaks to you, write back.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- SPEC STRIP -->
+  <section class="strip" aria-label="At a glance">
+    <ul class="strip__list">
+      <li><span class="strip__num">01</span>Twelve products</li>
+      <li><span class="strip__num">02</span>One mesh</li>
+      <li><span class="strip__num">03</span>Zero telemetry by default</li>
+      <li><span class="strip__num">04</span>Fourteen-day endurance</li>
+      <li><span class="strip__num">05</span>Sapphire optics</li>
+      <li><span class="strip__num">06</span>Built in Berlin</li>
+      <li><span class="strip__num">07</span>Edition 01 / 2026</li>
+      <!-- duplicate for seamless loop -->
+      <li><span class="strip__num">01</span>Twelve products</li>
+      <li><span class="strip__num">02</span>One mesh</li>
+      <li><span class="strip__num">03</span>Zero telemetry by default</li>
+      <li><span class="strip__num">04</span>Fourteen-day endurance</li>
+      <li><span class="strip__num">05</span>Sapphire optics</li>
+      <li><span class="strip__num">06</span>Built in Berlin</li>
+      <li><span class="strip__num">07</span>Edition 01 / 2026</li>
+    </ul>
+  </section>
+
+  <!-- FEATURED DEVICES -->
+  <section class="featured" id="featured">
+    <header class="section-head">
+      <div>
+        <p class="eyebrow" data-reveal>
+          <span class="eyebrow__dot"></span>
+          Featured Devices <span class="eyebrow__sep">/</span> 01
+        </p>
+        <h2 class="section-title" data-reveal data-reveal-delay="100">
+          The <em>family</em>, at&nbsp;rest.
+        </h2>
+      </div>
+      <p class="section-lede" data-reveal data-reveal-delay="200">
+        Six instruments designed to feel like one. Built from the same alloy, tuned by
+        the same engineers, speaking the same protocol. Tap any card to read its file.
+      </p>
+    </header>
+
+    <div class="featured__bento">
+
+      <!-- Hero card: Smart Watch Pro -->
+      <article class="pcard pcard--hero" data-reveal>
+        <span class="pcard__tag"><span class="pcard__tag-dot"></span> Flagship</span>
+        <div class="pcard__visual">
+          <img class="dv-img" src="assets/testertech/watch-pro.png" alt="Smart Watch Pro" style="width: 280px;" loading="lazy" />
+        </div>
+        <div class="pcard__meta">
+          <div class="pcard__heading">
+            <span class="pcard__kicker">001 &middot; The wrist</span>
+            <h3 class="pcard__title">Smart Watch <em>Pro</em></h3>
+            <p class="pcard__body">Field-grade chronograph. Sapphire optics, 14-day endurance, milled from one billet.</p>
+          </div>
+          <span class="pcard__price">$749</span>
+        </div>
+        <a href="product.html" class="pcard__link">
+          Open the Pro
+          <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true">
+            <path d="M2 6h8M7 2l4 4-4 4" stroke="currentColor" stroke-width="1.3" fill="none" stroke-linecap="square" />
+          </svg>
+        </a>
+      </article>
+
+      <!-- Tall card: Smart Glasses -->
+      <article class="pcard pcard--tall" data-reveal data-reveal-delay="80">
+        <span class="pcard__tag"><span class="pcard__tag-dot pcard__tag-dot--cool"></span> New</span>
+        <div class="pcard__visual">
+          <img class="dv-img" src="assets/testertech/lens-01.png" alt="Lens 01 AR glasses" style="width: 260px;" loading="lazy" />
+        </div>
+        <div class="pcard__meta">
+          <div class="pcard__heading">
+            <span class="pcard__kicker">002 &middot; The frame</span>
+            <h3 class="pcard__title">Lens <em>01</em></h3>
+            <p class="pcard__body">Photochromic AR glasses. Translation, captions, a quiet HUD.</p>
+          </div>
+          <span class="pcard__price">$589</span>
+        </div>
+        <a href="#" class="pcard__link">
+          Spec sheet
+          <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true">
+            <path d="M2 6h8M7 2l4 4-4 4" stroke="currentColor" stroke-width="1.3" fill="none" stroke-linecap="square" />
+          </svg>
+        </a>
+      </article>
+
+      <!-- Wide card: Smart Speaker -->
+      <article class="pcard pcard--wide" data-reveal>
+        <span class="pcard__tag"><span class="pcard__tag-dot"></span> Ambient</span>
+        <div class="pcard__visual">
+          <img class="dv-img" src="assets/testertech/echo-field.png" alt="Echo Field speaker" style="width: 200px;" loading="lazy" />
+        </div>
+        <div class="pcard__meta">
+          <div class="pcard__heading">
+            <span class="pcard__kicker">003 &middot; The room</span>
+            <h3 class="pcard__title">Echo <em>Field</em></h3>
+            <p class="pcard__body">Voice-first assistant. Far-field array. Local speech recognition.</p>
+          </div>
+          <span class="pcard__price">$329</span>
+        </div>
+        <a href="#" class="pcard__link">
+          Hear it
+          <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true">
+            <path d="M2 6h8M7 2l4 4-4 4" stroke="currentColor" stroke-width="1.3" fill="none" stroke-linecap="square" />
+          </svg>
+        </a>
+      </article>
+
+      <!-- Reg card: Ring -->
+      <article class="pcard pcard--reg" data-reveal data-reveal-delay="80">
+        <span class="pcard__tag"><span class="pcard__tag-dot"></span> Wearable</span>
+        <div class="pcard__visual">
+          <img class="dv-img" src="assets/testertech/loop-ring.png" alt="Loop Ring" style="width: 180px;" loading="lazy" />
+        </div>
+        <div class="pcard__meta">
+          <div class="pcard__heading">
+            <span class="pcard__kicker">004</span>
+            <h3 class="pcard__title">Loop <em>Ring</em></h3>
+          </div>
+          <span class="pcard__price">$269</span>
+        </div>
+      </article>
+
+      <!-- Reg card: Earbuds -->
+      <article class="pcard pcard--reg" data-reveal data-reveal-delay="160">
+        <span class="pcard__tag"><span class="pcard__tag-dot pcard__tag-dot--cool"></span> Audio</span>
+        <div class="pcard__visual">
+          <img class="dv-img" src="assets/testertech/bud-mono.png" alt="Bud Mono earbuds" style="width: 200px;" loading="lazy" />
+        </div>
+        <div class="pcard__meta">
+          <div class="pcard__heading">
+            <span class="pcard__kicker">005</span>
+            <h3 class="pcard__title">Bud <em>Mono</em></h3>
+          </div>
+          <span class="pcard__price">$189</span>
+        </div>
+      </article>
+
+      <!-- Reg card: Bulb -->
+      <article class="pcard pcard--reg" data-reveal data-reveal-delay="240">
+        <span class="pcard__tag"><span class="pcard__tag-dot"></span> Living</span>
+        <div class="pcard__visual">
+          <div class="dv-bulb" style="width: 100px;">
+            <span class="dv-bulb__glow"></span>
+            <span class="dv-bulb__globe"></span>
+            <span class="dv-bulb__neck"></span>
+            <span class="dv-bulb__base"></span>
+          </div>
+        </div>
+        <div class="pcard__meta">
+          <div class="pcard__heading">
+            <span class="pcard__kicker">006</span>
+            <h3 class="pcard__title">Halo <em>Lamp</em></h3>
+          </div>
+          <span class="pcard__price">$79</span>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- WEARABLES -->
+  <section class="wearable" id="wearables">
+    <header class="section-head">
+      <div>
+        <p class="eyebrow" data-reveal>
+          <span class="eyebrow__dot"></span>
+          Wearable Technology <span class="eyebrow__sep">/</span> 02
+        </p>
+        <h2 class="section-title" data-reveal data-reveal-delay="100">
+          Worn, <em>not noticed.</em>
+        </h2>
+      </div>
+      <p class="section-lede" data-reveal data-reveal-delay="200">
+        Optics on the wrist. Optics on the face. A ring you forget about until it tells
+        you something worth listening to. Three pieces, one continuous sensor stack.
+      </p>
+    </header>
+
+    <div class="wearable__inner">
+
+      <!-- Smart Glasses split -->
+      <article class="split" data-reveal>
+        <div class="split__visual">
+          <div class="split__stage">
+            <span class="split__stage-tick split__stage-tick--tl"></span>
+            <span class="split__stage-tick split__stage-tick--tr"></span>
+            <span class="split__stage-tick split__stage-tick--bl"></span>
+            <span class="split__stage-tick split__stage-tick--br"></span>
+            <img class="dv-img" src="assets/testertech/lens-01.png" alt="Lens 01 AR glasses" style="width: 70%; max-width: 420px;" loading="lazy" />
+            <div class="split__stage-readout">
+              <span>OBJ</span><span>LENS&nbsp;01</span>
+              <span>FOV</span><span>54&deg;</span>
+              <span>WT</span><span>27g</span>
+            </div>
+          </div>
+        </div>
+        <div class="split__content">
+          <p class="eyebrow">
+            <span class="eyebrow__dot"></span>
+            Optics <span class="eyebrow__sep">/</span> Lens 01
+          </p>
+          <h3 class="split__title">A <em>quiet</em> HUD<br/>for the face.</h3>
+          <p class="split__lede">
+            Photochromic titanium frames. A 54&deg; field, monochrome by choice, lit
+            only when something genuinely needs your attention. Translation, captions,
+            directions &mdash; nothing else.
+          </p>
+          <div class="split__specs">
+            <div>
+              <span class="split__spec-key">Field</span>
+              <span class="split__spec-val">54&deg;</span>
+            </div>
+            <div>
+              <span class="split__spec-key">Weight</span>
+              <span class="split__spec-val">27g</span>
+            </div>
+            <div>
+              <span class="split__spec-key">Battery</span>
+              <span class="split__spec-val">9h on</span>
+            </div>
+          </div>
+          <a href="#" class="btn btn--ghost">
+            <span>Read the file</span>
+            <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
+              <path d="M3 8h10M9 3l5 5-5 5" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="square" />
+            </svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- Smart Ring split (reversed) -->
+      <article class="split split--reverse" data-reveal>
+        <div class="split__visual">
+          <div class="split__stage">
+            <span class="split__stage-tick split__stage-tick--tl"></span>
+            <span class="split__stage-tick split__stage-tick--tr"></span>
+            <span class="split__stage-tick split__stage-tick--bl"></span>
+            <span class="split__stage-tick split__stage-tick--br"></span>
+            <img class="dv-img" src="assets/testertech/loop-ring.png" alt="Loop Ring" style="width: 60%; max-width: 320px;" loading="lazy" />
+            <div class="split__stage-readout">
+              <span>OBJ</span><span>LOOP&nbsp;RING</span>
+              <span>HR</span><span>62bpm</span>
+              <span>O&#8322;</span><span>98%</span>
+            </div>
+          </div>
+        </div>
+        <div class="split__content">
+          <p class="eyebrow">
+            <span class="eyebrow__dot"></span>
+            Wearable <span class="eyebrow__sep">/</span> Loop Ring
+          </p>
+          <h3 class="split__title">The <em>quieter</em><br/>instrument.</h3>
+          <p class="split__lede">
+            A titanium ring with the same sensor block as the Pro &mdash; pulse, oxygen,
+            skin temperature, sleep stages. Seven days of charge. The instrument
+            you actually forget you&rsquo;re wearing.
+          </p>
+          <div class="split__specs">
+            <div>
+              <span class="split__spec-key">Sizes</span>
+              <span class="split__spec-val">5 &mdash; 14</span>
+            </div>
+            <div>
+              <span class="split__spec-key">Battery</span>
+              <span class="split__spec-val">7 days</span>
+            </div>
+            <div>
+              <span class="split__spec-key">Sensors</span>
+              <span class="split__spec-val">4-axis</span>
+            </div>
+          </div>
+          <a href="#" class="btn btn--ghost">
+            <span>Read the file</span>
+            <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
+              <path d="M3 8h10M9 3l5 5-5 5" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="square" />
+            </svg>
+          </a>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- A DAY WITH TESTER — lifestyle storytelling -->
+  <section class="day" id="day" aria-label="A day with Tester">
+    <header class="section-head">
+      <div>
+        <p class="eyebrow" data-reveal>
+          <span class="eyebrow__dot"></span>
+          A Day with Tester <span class="eyebrow__sep">/</span> Lived
+        </p>
+        <h2 class="section-title" data-reveal data-reveal-delay="100">
+          A day, in <em>quiet</em><br/>instruments.
+        </h2>
+      </div>
+      <p class="section-lede" data-reveal data-reveal-delay="200">
+        Three small scenes from a Tuesday. Nothing dramatic happens. That&rsquo;s
+        the design goal &mdash; technology that fades behind the day instead of
+        interrupting it.
+      </p>
+    </header>
+
+    <div class="day__grid">
+
+      <article class="day__scene" data-reveal>
+        <div class="day__scene-art day__art--morning">
+          <p class="day__scene-time">06:47</p>
+          <span class="day__art-line" aria-hidden="true"></span>
+        </div>
+        <div class="day__scene-copy">
+          <h3 class="day__scene-title">A <em>soft</em> start.</h3>
+          <p class="day__scene-body">
+            The lamp warms up before the alarm does. The watch taps your wrist
+            twice &mdash; that&rsquo;s its whole personality before coffee. No screen,
+            no notification, no name.
+          </p>
+        </div>
+      </article>
+
+      <article class="day__scene" data-reveal data-reveal-delay="120">
+        <div class="day__scene-art day__art--focus">
+          <p class="day__scene-time">10:24 &middot; Focus</p>
+          <span class="day__art-glasses" aria-hidden="true">
+            <span></span><span></span><span></span>
+          </span>
+        </div>
+        <div class="day__scene-copy">
+          <h3 class="day__scene-title">Heads <em>down.</em></h3>
+          <p class="day__scene-body">
+            The display hub mutes the room. The glasses translate a paragraph from
+            a French paper without you asking. Echo Field holds calls until you
+            stand up. Nothing pings.
+          </p>
+        </div>
+      </article>
+
+      <article class="day__scene" data-reveal data-reveal-delay="240">
+        <div class="day__scene-art day__art--evening">
+          <p class="day__scene-time">21:08 &middot; Wind-down</p>
+        </div>
+        <div class="day__scene-copy">
+          <h3 class="day__scene-title">The room <em>dims itself.</em></h3>
+          <p class="day__scene-body">
+            Lights drop to 22%. The speaker plays the album you ended on last
+            Tuesday. The watch loosens the haptics. The mesh notices you stopped
+            moving &mdash; and gives you the room.
+          </p>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- AI ASSISTANTS -->
+  <section class="ai-section" id="ai">
+    <div class="ai-section__glow" aria-hidden="true"></div>
+    <div class="ai-section__inner">
+      <div class="ai-section__visual" data-reveal>
+        <div class="waveform">
+          <p class="waveform__prompt">
+            <span class="waveform__prompt-dot"></span>
+            <span>Listening &middot; Local model</span>
+          </p>
+          <div class="waveform__bars">
+            <span class="waveform__bar"></span>
+            <span class="waveform__bar"></span>
+            <span class="waveform__bar"></span>
+            <span class="waveform__bar"></span>
+            <span class="waveform__bar"></span>
+            <span class="waveform__bar"></span>
+            <span class="waveform__bar"></span>
+            <span class="waveform__bar"></span>
+            <span class="waveform__bar"></span>
+            <span class="waveform__bar"></span>
+            <span class="waveform__bar"></span>
+            <span class="waveform__bar"></span>
+            <span class="waveform__bar"></span>
+            <span class="waveform__bar"></span>
+            <span class="waveform__bar"></span>
+          </div>
+          <p class="waveform__transcript">
+            &ldquo;Dim the studio lights to <span>22%</span> and start the morning playlist.&rdquo;
+          </p>
+        </div>
+      </div>
+
+      <div class="ai-section__content">
+        <p class="eyebrow" data-reveal>
+          <span class="eyebrow__dot"></span>
+          AI Assistants <span class="eyebrow__sep">/</span> 03
+        </p>
+        <h2 class="section-title" data-reveal data-reveal-delay="100" style="font-size: clamp(2.2rem, 4.5vw, 3.6rem);">
+          Ambient <em>intelligence</em>,<br/>local&nbsp;by default.
+        </h2>
+        <p class="split__lede" data-reveal data-reveal-delay="200" style="max-width: 42ch;">
+          Echo Field is a far-field assistant designed to do less, better. Speech
+          recognition runs on-device. Nothing leaves the room unless you ask it to.
+          When it speaks, it sounds like a person who actually lives there.
+        </p>
+
+        <ol class="ai-section__capabilities" data-reveal data-reveal-delay="280">
+          <li>
+            <div>
+              <span class="ai-section__cap-title">On-device transcription</span>
+              <p class="ai-section__cap-body">A 1.2B-parameter model runs locally. No cloud round-trip, no telemetry, no transcript history outside your home.</p>
+            </div>
+          </li>
+          <li>
+            <div>
+              <span class="ai-section__cap-title">Mesh-aware orchestration</span>
+              <p class="ai-section__cap-body">Knows which devices are in which room. Speaks to the closest one. Hands off cleanly when you move.</p>
+            </div>
+          </li>
+          <li>
+            <div>
+              <span class="ai-section__cap-title">A privacy ledger you can read</span>
+              <p class="ai-section__cap-body">Every request &mdash; voice, sensor, automation &mdash; signed and journaled. Open the ledger from the wrist.</p>
+            </div>
+          </li>
+        </ol>
+
+        <a href="#" class="btn btn--primary" data-reveal data-reveal-delay="360" style="margin-top: 0.5rem;">
+          <span>Explore Echo Field</span>
+          <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
+            <path d="M3 8h10M9 3l5 5-5 5" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="square" />
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- SMART LIVING -->
+  <section class="living" id="living">
+    <header class="section-head">
+      <div>
+        <p class="eyebrow" data-reveal>
+          <span class="eyebrow__dot"></span>
+          Smart Living <span class="eyebrow__sep">/</span> 04
+        </p>
+        <h2 class="section-title" data-reveal data-reveal-delay="100">
+          The <em>quiet</em> mesh.
+        </h2>
+      </div>
+      <p class="section-lede" data-reveal data-reveal-delay="200">
+        The room is the interface. Lights, locks, displays, sensors &mdash; tuned to
+        notice you, never demand of you. Scroll the rail.
+      </p>
+    </header>
+
+    <div class="living__rail">
+      <div class="living__track" id="livingTrack" tabindex="0" aria-label="Smart living devices">
+
+        <article class="lcard" data-reveal>
+          <span class="lcard__index">01 / 06</span>
+          <div class="lcard__visual">
+            <div class="dv-bulb" style="width: 120px;">
+              <span class="dv-bulb__glow"></span>
+              <span class="dv-bulb__globe"></span>
+              <span class="dv-bulb__neck"></span>
+              <span class="dv-bulb__base"></span>
+            </div>
+          </div>
+          <div>
+            <h3 class="lcard__title">Halo <em>Lamp</em></h3>
+            <p class="lcard__body">Tunable warm-to-cool, biometric circadian sync. Mesh-aware dimming.</p>
+          </div>
+          <div class="lcard__foot">
+            <span>1600&nbsp;lm</span>
+            <span class="lcard__foot-price">$79</span>
+          </div>
+        </article>
+
+        <article class="lcard" data-reveal data-reveal-delay="80">
+          <span class="lcard__index">02 / 06</span>
+          <div class="lcard__visual">
+            <div class="dv-display">
+              <div class="dv-display__screen">
+                <div class="dv-display__ui">
+                  <div class="dv-display__ui-top">
+                    <span>10:24</span>
+                    <span>22&deg;C</span>
+                  </div>
+                  <span class="dv-display__ui-mid">Good morning,<br/><em style="font-style: italic;">Arca</em>.</span>
+                  <span class="dv-display__ui-bot">3 routines active</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <h3 class="lcard__title">Hub <em>Display</em></h3>
+            <p class="lcard__body">10&Prime; ambient panel. The dashboard the rest of the mesh writes to.</p>
+          </div>
+          <div class="lcard__foot">
+            <span>10&Prime; OLED</span>
+            <span class="lcard__foot-price">$429</span>
+          </div>
+        </article>
+
+        <article class="lcard" data-reveal data-reveal-delay="160">
+          <span class="lcard__index">03 / 06</span>
+          <div class="lcard__visual">
+            <img class="dv-img" src="assets/testertech/echo-field.png" alt="Echo Field speaker" style="width: 220px;" loading="lazy" />
+          </div>
+          <div>
+            <h3 class="lcard__title">Echo <em>Field</em></h3>
+            <p class="lcard__body">Local-first voice assistant. Far-field, six-mic array.</p>
+          </div>
+          <div class="lcard__foot">
+            <span>360&deg; audio</span>
+            <span class="lcard__foot-price">$329</span>
+          </div>
+        </article>
+
+        <article class="lcard" data-reveal data-reveal-delay="240">
+          <span class="lcard__index">04 / 06</span>
+          <div class="lcard__visual">
+            <img class="dv-img" src="assets/testertech/bud-mono.png" alt="Bud Mono earbuds" style="width: 220px;" loading="lazy" />
+          </div>
+          <div>
+            <h3 class="lcard__title">Bud <em>Mono</em></h3>
+            <p class="lcard__body">Active room-noise modeling. Picks up the watch&rsquo;s mic when it&rsquo;s cleaner.</p>
+          </div>
+          <div class="lcard__foot">
+            <span>8h + 28h</span>
+            <span class="lcard__foot-price">$189</span>
+          </div>
+        </article>
+
+        <article class="lcard" data-reveal data-reveal-delay="320">
+          <span class="lcard__index">05 / 06</span>
+          <div class="lcard__visual">
+            <!-- Door lock CSS render -->
+            <div style="position: relative; width: 140px; aspect-ratio: 0.7;">
+              <div style="position: absolute; inset: 0; border-radius: 20px; background: linear-gradient(160deg, #2a2620, #0a0908); border: 1px solid var(--line-strong); box-shadow: 0 24px 50px -20px rgba(0,0,0,0.7);"></div>
+              <div style="position: absolute; top: 22%; left: 50%; transform: translateX(-50%); width: 56%; aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.18), transparent 50%), linear-gradient(135deg, #c89e6a, #6b563a); box-shadow: 0 0 20px var(--brass-glow), inset 0 -8px 16px rgba(0,0,0,0.3);"></div>
+              <div style="position: absolute; bottom: 16%; left: 50%; transform: translateX(-50%); width: 30%; height: 3%; background: var(--brass); border-radius: 4px; box-shadow: 0 0 10px var(--brass-glow);"></div>
+            </div>
+          </div>
+          <div>
+            <h3 class="lcard__title">Bolt <em>Lock</em></h3>
+            <p class="lcard__body">Wrist-only entry. Mesh handover from watch to door, sub-100ms.</p>
+          </div>
+          <div class="lcard__foot">
+            <span>Z-wave + UWB</span>
+            <span class="lcard__foot-price">$249</span>
+          </div>
+        </article>
+
+        <article class="lcard" data-reveal data-reveal-delay="400">
+          <span class="lcard__index">06 / 06</span>
+          <div class="lcard__visual">
+            <!-- Sensor puck render -->
+            <div style="position: relative; width: 120px; aspect-ratio: 1;">
+              <div style="position: absolute; inset: 0; border-radius: 50%; background: radial-gradient(circle at 30% 25%, rgba(255,255,255,0.2), transparent 45%), linear-gradient(135deg, #2a2620, #0a0908); border: 1px solid rgba(255,255,255,0.06); box-shadow: 0 24px 50px -20px rgba(0,0,0,0.7);"></div>
+              <div style="position: absolute; inset: 18%; border-radius: 50%; background: radial-gradient(circle at center, rgba(118,178,220,0.25), transparent 60%); border: 1px solid var(--cool-soft);"></div>
+              <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 22%; aspect-ratio: 1; border-radius: 50%; background: var(--cool); box-shadow: 0 0 14px var(--cool); animation: dotPulse 2s ease-in-out infinite;"></div>
+            </div>
+          </div>
+          <div>
+            <h3 class="lcard__title">Mesh <em>Puck</em></h3>
+            <p class="lcard__body">Tiny radio relay. Drop one per room. The mesh fills itself in.</p>
+          </div>
+          <div class="lcard__foot">
+            <span>4-pack</span>
+            <span class="lcard__foot-price">$99</span>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- SIGHTS — landmark storytelling teaser -->
+  <section class="sights" id="sights" aria-label="Sights — landmark studies">
+    <div class="sights__inner">
+      <div class="sights__copy">
+        <p class="eyebrow" data-reveal>
+          <span class="eyebrow__dot"></span>
+          Sights <span class="eyebrow__sep">/</span> Field Study&nbsp;01
+        </p>
+        <h2 class="sights__title" data-reveal data-reveal-delay="100">
+          Drawings that<br/>
+          <em>finish themselves.</em>
+        </h2>
+        <p class="sights__lede" data-reveal data-reveal-delay="200">
+          A scroll-through study of how a landmark assembles from line to stone.
+          We start with the architectural blueprint of <em>La Sagrada Fam&iacute;lia</em>,
+          let it bloom through 121 frames of construction light, and land on the
+          finished basilica &mdash; one image per scroll tick.
+        </p>
+
+        <dl class="sights__meta" data-reveal data-reveal-delay="280">
+          <div class="sights__meta-item">
+            <dt class="sights__meta-key">Subject</dt>
+            <dd class="sights__meta-val">La Sagrada Fam&iacute;lia</dd>
+          </div>
+          <div class="sights__meta-item">
+            <dt class="sights__meta-key">Frames</dt>
+            <dd class="sights__meta-val">121</dd>
+          </div>
+          <div class="sights__meta-item">
+            <dt class="sights__meta-key">Source</dt>
+            <dd class="sights__meta-val">Kie.ai &middot; ffmpeg</dd>
+          </div>
+        </dl>
+
+        <div class="sights__cta-row" data-reveal data-reveal-delay="360">
+          <a href="Sights.html" class="btn btn--primary">
+            <span>Enter the study</span>
+            <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
+              <path d="M3 8h10M9 3l5 5-5 5" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="square" />
+            </svg>
+          </a>
+          <a href="Sights.html#process" class="btn btn--ghost">
+            <span>How it&rsquo;s made</span>
+          </a>
+        </div>
+      </div>
+
+      <a href="Sights.html" class="sights__stage" aria-label="Open Sights — La Sagrada Familia">
+        <img class="sights__stage-img" src="assets/sagrada-frames/frame_001.jpg" alt="Architectural blueprint line-art of La Sagrada Familia" loading="lazy" decoding="async" />
+        <img class="sights__stage-img sights__stage-img--end" src="assets/sagrada-frames/frame_121.jpg" alt="Final realized stone facade of La Sagrada Familia" loading="lazy" decoding="async" />
+        <span class="sights__stage-tick sights__stage-tick--tl"></span>
+        <span class="sights__stage-tick sights__stage-tick--tr"></span>
+        <span class="sights__stage-tick sights__stage-tick--bl"></span>
+        <span class="sights__stage-tick sights__stage-tick--br"></span>
+        <span class="sights__stage-readout">Blueprint &rarr; Stone</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- PRESS & TESTIMONIALS -->
+  <section class="press" id="press" aria-label="Press and testimonials">
+    <header class="section-head">
+      <div>
+        <p class="eyebrow" data-reveal>
+          <span class="eyebrow__dot"></span>
+          Press <span class="eyebrow__sep">/</span> 04b
+        </p>
+        <h2 class="section-title" data-reveal data-reveal-delay="100">
+          What people <em>think.</em>
+        </h2>
+      </div>
+      <p class="section-lede" data-reveal data-reveal-delay="200">
+        We don&rsquo;t do launch tours. The Pro and the Field went out as samples,
+        and a few good writers chose to write back. Here&rsquo;s a selection.
+      </p>
+    </header>
+
+    <ul class="press__logos" data-reveal>
+      <li><em>W</em>IRED</li>
+      <li>Monocle</li>
+      <li>It&rsquo;s Nice That</li>
+      <li>Core77</li>
+      <li>Dezeen</li>
+      <li>Fast Co.</li>
+    </ul>
+
+    <div class="press__grid">
+
+      <article class="qcard" data-reveal>
+        <span class="qcard__mark" aria-hidden="true">&ldquo;</span>
+        <div class="qcard__stars" aria-label="Rated 5 out of 5">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <p class="qcard__quote">
+          &ldquo;The Tester family is the rarest thing in consumer tech right now &mdash;
+          <em>a coherent voice.</em> Every device looks like it came out of the same room,
+          because it did.&rdquo;
+        </p>
+        <footer class="qcard__attr">
+          <span class="qcard__avatar" aria-hidden="true">E</span>
+          <span class="qcard__attr-text">
+            <span class="qcard__name">Eden Marsh</span>
+            <span class="qcard__role">Monocle 24 &middot; Feb 2026</span>
+          </span>
+        </footer>
+      </article>
+
+      <article class="qcard" data-reveal data-reveal-delay="120">
+        <span class="qcard__mark" aria-hidden="true">&ldquo;</span>
+        <div class="qcard__stars" aria-label="Rated 5 out of 5">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <p class="qcard__quote">
+          &ldquo;If Nothing made watches and Leica made smart homes, the result would
+          look a lot like this. The Lens 01 is the first AR product I&rsquo;ve
+          <em>worn outside</em> without feeling like a marketing asset.&rdquo;
+        </p>
+        <footer class="qcard__attr">
+          <span class="qcard__avatar" aria-hidden="true">N</span>
+          <span class="qcard__attr-text">
+            <span class="qcard__name">Nora Behrens</span>
+            <span class="qcard__role">WIRED DE &middot; Mar 2026</span>
+          </span>
+        </footer>
+      </article>
+
+      <article class="qcard" data-reveal data-reveal-delay="240">
+        <span class="qcard__mark" aria-hidden="true">&ldquo;</span>
+        <div class="qcard__stars" aria-label="Rated 4.5 out of 5">&#9733;&#9733;&#9733;&#9733;&#9734;</div>
+        <p class="qcard__quote">
+          &ldquo;Echo Field is the first ambient assistant that doesn&rsquo;t feel like
+          a microphone. It sounds like a person <em>who lives there</em> &mdash; quiet,
+          deliberate, and refreshingly indifferent to my data.&rdquo;
+        </p>
+        <footer class="qcard__attr">
+          <span class="qcard__avatar" aria-hidden="true">A</span>
+          <span class="qcard__attr-text">
+            <span class="qcard__name">Arvind Roy</span>
+            <span class="qcard__role">It&rsquo;s Nice That &middot; Apr 2026</span>
+          </span>
+        </footer>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- FUTURE TECH -->
+  <section class="future" id="future">
+    <div class="future__inner">
+      <header class="section-head" style="margin-bottom: 1rem;">
+        <div>
+          <p class="eyebrow" data-reveal>
+            <span class="eyebrow__dot"></span>
+            Future Tech <span class="eyebrow__sep">/</span> 05
+          </p>
+          <h2 class="section-title" data-reveal data-reveal-delay="100">
+            What we&rsquo;re <em>building</em>.
+          </h2>
+        </div>
+        <p class="section-lede" data-reveal data-reveal-delay="200">
+          Four products in the pipeline. We don&rsquo;t promise dates &mdash; we promise
+          that when they ship, they will be worth the wait.
+        </p>
+      </header>
+
+      <div class="future__rail">
+
+        <article class="fcard" data-reveal>
+          <span class="fcard__node"></span>
+          <p class="fcard__date">Q3 / 2026</p>
+          <h3 class="fcard__title">Wrist <em>Projector</em></h3>
+          <p class="fcard__body">Pico-laser HUD that throws a 6-inch interface onto the back of your hand. In bench.</p>
+          <span class="fcard__status">Prototyping</span>
+        </article>
+
+        <article class="fcard" data-reveal data-reveal-delay="120">
+          <span class="fcard__node"></span>
+          <p class="fcard__date">Q4 / 2026</p>
+          <h3 class="fcard__title">Skin <em>Patch</em></h3>
+          <p class="fcard__body">Continuous glucose + hydration. A coin-sized wearable that lives under cotton.</p>
+          <span class="fcard__status">Clinical trial</span>
+        </article>
+
+        <article class="fcard" data-reveal data-reveal-delay="240">
+          <span class="fcard__node"></span>
+          <p class="fcard__date">2027</p>
+          <h3 class="fcard__title">Mesh <em>Bridge</em></h3>
+          <p class="fcard__body">A radio that lets Tester devices talk to non-Tester devices &mdash; without telemetry.</p>
+          <span class="fcard__status">Designing</span>
+        </article>
+
+        <article class="fcard" data-reveal data-reveal-delay="360">
+          <span class="fcard__node"></span>
+          <p class="fcard__date">2027+</p>
+          <h3 class="fcard__title">Open <em>Field</em></h3>
+          <p class="fcard__body">An SDK so makers can build their own instrument on the same protocol.</p>
+          <span class="fcard__status">Research</span>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq" id="faq" aria-label="Frequently asked questions">
+    <div class="faq__inner">
+      <header class="section-head" style="margin-bottom: 0;">
+        <div>
+          <p class="eyebrow" data-reveal>
+            <span class="eyebrow__dot"></span>
+            Common Questions <span class="eyebrow__sep">/</span> 06
+          </p>
+          <h2 class="section-title" data-reveal data-reveal-delay="100">
+            If you&rsquo;re <em>wondering.</em>
+          </h2>
+        </div>
+        <p class="section-lede" data-reveal data-reveal-delay="200">
+          The questions we hear most often. Don&rsquo;t see yours? Email us &mdash;
+          a real person writes back, usually within a day.
+        </p>
+      </header>
+
+      <div class="faq__list" data-reveal data-reveal-delay="120">
+        <details class="faq__item">
+          <summary>What exactly is the &ldquo;Tester mesh&rdquo;?</summary>
+          <div class="faq__answer">
+            A small, locally-routed radio protocol that lets every Tester device
+            talk to every other Tester device without leaving your home. Devices
+            negotiate amongst themselves &mdash; the watch can hand off a call to
+            Echo Field; the lock can ask the watch if it&rsquo;s really you. <em>No
+            cloud round-trip is required</em> for any of it.
+          </div>
+        </details>
+
+        <details class="faq__item">
+          <summary>Do I need every device for the mesh to work?</summary>
+          <div class="faq__answer">
+            No. Each device is fully functional on its own. The mesh just becomes
+            more useful as you add more pieces &mdash; the same way a good record
+            collection works. Most people start with the Watch Pro and one other
+            piece, usually the Lamp or the Field.
+          </div>
+        </details>
+
+        <details class="faq__item">
+          <summary>How does the privacy ledger actually work?</summary>
+          <div class="faq__answer">
+            Every device action &mdash; a voice request, a sensor read, an automation
+            &mdash; is signed and journaled to a local ledger on the Hub Display
+            (or your phone if you don&rsquo;t have one). You can open it, read it
+            line by line, and revoke anything. We can&rsquo;t see any of it.
+            <em>Nothing</em> leaves your home unless you explicitly opt in.
+          </div>
+        </details>
+
+        <details class="faq__item">
+          <summary>What&rsquo;s the warranty and repair story?</summary>
+          <div class="faq__answer">
+            Two-year warranty on everything. Every device is designed to be
+            opened &mdash; the Watch Pro and the Ring share a common battery cell
+            we&rsquo;ll swap for &euro;39. We publish service manuals for anyone
+            who wants to do it themselves.
+          </div>
+        </details>
+
+        <details class="faq__item">
+          <summary>Where do you ship and when?</summary>
+          <div class="faq__answer">
+            EU, UK, US, Canada, Japan, Australia, and Singapore at launch. Edition
+            01 of the Watch Pro ships in late Q3 2026 &mdash; numbered to the first
+            hundred. The rest of the family follows on a rolling cadence through
+            2026 and 2027.
+          </div>
+        </details>
+
+        <details class="faq__item">
+          <summary>What happens if Tester stops existing?</summary>
+          <div class="faq__answer">
+            Honest question, honest answer: the protocol is open. Every Tester
+            device can run firmware that we&rsquo;ve already published under a
+            permissive license. <em>If we vanish</em>, the mesh keeps working,
+            and another studio can ship replacements. We don&rsquo;t plan on
+            vanishing &mdash; but we built the family so that you don&rsquo;t
+            have to take our word for that.
+          </div>
+        </details>
+      </div>
+
+      <div class="faq__cta" data-reveal>
+        <p class="faq__cta-text">
+          <strong>Still wondering?</strong> Write to <em>hello@tester.berlin</em> &mdash;
+          a human reads every email.
+        </p>
+        <a href="#reserve">
+          Or jump to reserve
+          <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true">
+            <path d="M2 6h8M7 2l4 4-4 4" stroke="currentColor" stroke-width="1.3" fill="none" stroke-linecap="square" />
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta" id="reserve">
+    <div class="cta__inner">
+      <p class="eyebrow" data-reveal>
+        <span class="eyebrow__dot"></span>
+        Reserve <span class="eyebrow__sep">/</span> The first hundred
+      </p>
+      <h2 class="cta__title" data-reveal data-reveal-delay="100">
+        Step into the<br/>
+        <em>wider instrument.</em>
+      </h2>
+      <p class="cta__lede" data-reveal data-reveal-delay="200">
+        Edition 01 ships from Berlin. Reservations are open for the family
+        &mdash; bundle the watch, the lens, and the field and we&rsquo;ll number them
+        together. We&rsquo;ll write when there&rsquo;s something worth saying.
+      </p>
+
+      <div class="cta__row" data-reveal data-reveal-delay="320">
+        <a href="#" class="btn btn--primary btn--large">
+          <span>Reserve the family</span>
+          <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true">
+            <path d="M3 9h11M10 3l6 6-6 6" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="square" />
+          </svg>
+        </a>
+        <a href="product.html" class="btn btn--ghost btn--large">
+          <span>Back to the Pro</span>
+        </a>
+      </div>
+
+      <form class="newsletter" data-reveal data-reveal-delay="440" onsubmit="event.preventDefault(); this.querySelector('button').textContent = 'Logged'; this.querySelector('input').value = '';">
+        <input class="newsletter__input" type="email" placeholder="you@somewhere.tld" aria-label="Email address" required />
+        <button class="newsletter__btn" type="submit">Subscribe</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer__top">
+      <div class="footer__brand-block">
+        <p class="footer__mark">
+          <span class="footer__mark-letter">T</span>
+          <span class="footer__mark-name">TESTER</span>
+        </p>
+        <p class="footer__tag">Field-grade instruments for the wrist &mdash; and the room around it.</p>
+      </div>
+
+      <div class="footer__col">
+        <p class="footer__col-title">Products</p>
+        <ul>
+          <li><a href="product.html">Smart Watch Pro</a></li>
+          <li><a href="#wearables">Lens 01</a></li>
+          <li><a href="#living">Echo Field</a></li>
+          <li><a href="#wearables">Loop Ring</a></li>
+          <li><a href="#living">Halo Lamp</a></li>
+        </ul>
+      </div>
+
+      <div class="footer__col">
+        <p class="footer__col-title">Studio</p>
+        <ul>
+          <li><a href="#">Berlin Bench</a></li>
+          <li><a href="anything.html">Motion Reel</a></li>
+          <li><a href="#future">Roadmap</a></li>
+          <li><a href="#">Press</a></li>
+        </ul>
+      </div>
+
+      <div class="footer__col">
+        <p class="footer__col-title">Support</p>
+        <ul>
+          <li><a href="#">Privacy Ledger</a></li>
+          <li><a href="#">Service</a></li>
+          <li><a href="#">Contact</a></li>
+          <li><a href="#">Reserve</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer__bottom">
+      <p>&copy; 2026 Tester Instruments &middot; Berlin</p>
+      <ul class="footer__social" aria-label="Social links">
+        <li>
+          <a href="#" aria-label="Twitter / X">
+            <svg width="16" height="16" viewBox="0 0 18 18" aria-hidden="true"><path d="M2.5 2.5l5.7 7.6L3 15.5h2l4.3-4.6 3.4 4.6h3.8L10.5 7.6l4.7-5.1h-2L9.2 6.6 6 2.5H2.5z" fill="currentColor"/></svg>
+          </a>
+        </li>
+        <li>
+          <a href="#" aria-label="Instagram">
+            <svg width="16" height="16" viewBox="0 0 18 18" aria-hidden="true">
+              <rect x="2.5" y="2.5" width="13" height="13" rx="3.5" stroke="currentColor" stroke-width="1.2" fill="none"/>
+              <circle cx="9" cy="9" r="3.2" stroke="currentColor" stroke-width="1.2" fill="none"/>
+              <circle cx="13" cy="5" r="0.8" fill="currentColor"/>
+            </svg>
+          </a>
+        </li>
+        <li>
+          <a href="#" aria-label="YouTube">
+            <svg width="16" height="16" viewBox="0 0 18 18" aria-hidden="true">
+              <rect x="1.5" y="4.5" width="15" height="9" rx="2.5" stroke="currentColor" stroke-width="1.2" fill="none"/>
+              <path d="M7.5 6.8l4 2.2-4 2.2V6.8z" fill="currentColor"/>
+            </svg>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </footer>
+
+  <script>
+    // ----- Sticky nav state -----
+    const nav = document.getElementById('nav');
+    let lastY = -1;
+    const onScroll = () => {
+      const y = window.scrollY || 0;
+      if ((y > 8) !== (lastY > 8)) {
+        nav.classList.toggle('is-scrolled', y > 8);
+      }
+      lastY = y;
+    };
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+
+    // ----- Reveal on scroll -----
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const revealables = document.querySelectorAll('[data-reveal]');
+    if (reduceMotion || !('IntersectionObserver' in window)) {
+      revealables.forEach(el => el.classList.add('is-visible'));
+    } else {
+      revealables.forEach(el => {
+        const delay = el.getAttribute('data-reveal-delay');
+        if (delay) el.style.setProperty('--reveal-delay', delay + 'ms');
+      });
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            io.unobserve(entry.target);
+          }
+        });
+      }, { rootMargin: '0px 0px -10% 0px', threshold: 0.05 });
+      revealables.forEach(el => io.observe(el));
+    }
+
+    // ----- Horizontal-scroll: turn vertical wheel into horizontal on the Living track -----
+    const livingTrack = document.getElementById('livingTrack');
+    if (livingTrack) {
+      let isOverTrack = false;
+      livingTrack.addEventListener('mouseenter', () => { isOverTrack = true; });
+      livingTrack.addEventListener('mouseleave', () => { isOverTrack = false; });
+      livingTrack.addEventListener('wheel', (e) => {
+        // Only redirect when the gesture is dominantly vertical
+        if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
+          const max = livingTrack.scrollWidth - livingTrack.clientWidth;
+          const next = livingTrack.scrollLeft + e.deltaY;
+          if ((e.deltaY > 0 && livingTrack.scrollLeft < max) ||
+              (e.deltaY < 0 && livingTrack.scrollLeft > 0)) {
+            e.preventDefault();
+            livingTrack.scrollLeft = next;
+          }
+        }
+      }, { passive: false });
+    }
+
+    // ----- Hero scroll-tilt: rotateX 20°→0°, scale 1.05→1, title rises -100px -----
+    const heroSection = document.querySelector('.hero');
+    const heroCopy    = document.querySelector('.hero__copy');
+    const heroCluster = document.querySelector('.hero__cluster');
+    if (heroSection && heroCopy && heroCluster && !reduceMotion) {
+      let ticking = false;
+      const updateHeroTilt = () => {
+        ticking = false;
+        const rect = heroSection.getBoundingClientRect();
+        const scrollable = rect.height - window.innerHeight;
+        let p = scrollable > 0 ? -rect.top / scrollable : 0;
+        if (p < 0) p = 0; else if (p > 1) p = 1;
+        const tilt = 20 - p * 20;          // 20° → 0°
+        const scl  = 1.05 - p * 0.05;      // 1.05 → 1
+        const ty   = -p * 100;              // 0 → -100px
+        heroCluster.style.setProperty('--tilt', tilt + 'deg');
+        heroCluster.style.setProperty('--scl',  scl);
+        heroCopy.style.setProperty('--copy-y', ty + 'px');
+      };
+      const onHeroScroll = () => {
+        if (!ticking) { ticking = true; requestAnimationFrame(updateHeroTilt); }
+      };
+      window.addEventListener('scroll', onHeroScroll, { passive: true });
+      window.addEventListener('resize', onHeroScroll, { passive: true });
+      updateHeroTilt();
+    }
+
+    // ----- Hero cluster: subtle parallax on pointer move (desktop only) -----
+    const cluster = document.querySelector('.hero__cluster');
+    if (cluster && !reduceMotion && window.matchMedia('(pointer: fine)').matches) {
+      const devices = cluster.querySelectorAll('.hero__device');
+      cluster.addEventListener('pointermove', (e) => {
+        const rect = cluster.getBoundingClientRect();
+        const cx = (e.clientX - rect.left) / rect.width  - 0.5;
+        const cy = (e.clientY - rect.top)  / rect.height - 0.5;
+        devices.forEach((d, i) => {
+          const depth = (i + 1) * 6;
+          d.style.transform = `translate(${cx * depth}px, ${cy * depth}px)`;
+        });
+      });
+      cluster.addEventListener('pointerleave', () => {
+        devices.forEach(d => { d.style.transform = ''; });
+      });
+    }
+  </script>
+</body>
+</html>
