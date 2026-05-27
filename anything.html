@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>Transmission 002.5 — Tester Smart Watch Pro</title>
-  <meta name="description" content="A transmission from the bench. Tester Smart Watch Pro, in motion." />
+  <title>Transmission 002.5 — Tester Loop Ring</title>
+  <meta name="description" content="A transmission from the bench. The Tester Loop Ring, in motion — eight seconds of titanium, exploded and reassembled." />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -42,8 +42,18 @@
     </a>
   </header>
 
-  <!-- HERO — off-center AI video panel + left-aligned italic title -->
-  <section class="tx-hero">
+  <!-- HERO — off-center scroll-driven flipbook + left-aligned italic title -->
+  <!-- The hero is a long sticky-scroll section now. As the user scrolls, the
+       canvas inside .tx-hero__video-stack scrubs through the ring-dissection
+       frames, same pattern as Sights.html. -->
+  <section
+    class="tx-hero"
+    data-flipbook
+    data-frames="192"
+    data-frames-dir="assets/ring-frames"
+    aria-label="Scroll-driven ring dissection flipbook"
+  >
+   <div class="tx-hero__inner">
     <div class="tx-hero__title-col">
       <p class="tx-hero__eyebrow">
         <span class="tx-hero__eyebrow-tick"></span>
@@ -52,41 +62,43 @@
       </p>
 
       <h1 class="tx-hero__title">
-        <span class="tx-hero__title-word" data-word="Tester">Tester</span>
-        <span class="tx-hero__title-word tx-hero__title-word--wonk" data-word="in&nbsp;motion">in&nbsp;motion</span>
+        <span class="tx-hero__title-word" data-word="The&nbsp;Ring">The&nbsp;Ring</span>
+        <span class="tx-hero__title-word tx-hero__title-word--wonk" data-word="in&nbsp;pieces">in&nbsp;pieces</span>
         <span class="tx-hero__title-word tx-hero__title-word--italic" data-word="002.5">002.5</span>
       </h1>
 
       <p class="tx-hero__lede">
-        Eight seconds of light, lens, and metal. A transmission from our prototyping bench
-        in Berlin &mdash; rendered, recorded, sent. Watch the Pro <em>become itself</em>.
+        Eight seconds of titanium, sensor, and silicon. A transmission from our prototyping bench
+        in Berlin &mdash; the Loop Ring taken apart, layer by layer, then set back together.
+        Scroll to <em>break it open</em>.
       </p>
 
       <div class="tx-hero__meta">
         <div class="tx-hero__meta-cell">
-          <span class="tx-hero__meta-key">Lens</span>
-          <span class="tx-hero__meta-val">35&nbsp;mm prime</span>
+          <span class="tx-hero__meta-key">Subject</span>
+          <span class="tx-hero__meta-val">Loop&nbsp;Ring</span>
         </div>
         <div class="tx-hero__meta-cell">
-          <span class="tx-hero__meta-key">Codec</span>
-          <span class="tx-hero__meta-val">ProRes&nbsp;4444</span>
+          <span class="tx-hero__meta-key">Layers</span>
+          <span class="tx-hero__meta-val">Five&nbsp;/&nbsp;exploded</span>
         </div>
         <div class="tx-hero__meta-cell">
           <span class="tx-hero__meta-key">Stock</span>
-          <span class="tx-hero__meta-val">Veo&nbsp;/&nbsp;Tester</span>
+          <span class="tx-hero__meta-val">Veo&nbsp;3&nbsp;/&nbsp;Tester</span>
         </div>
       </div>
     </div>
 
     <div class="tx-hero__video-frame">
       <div class="tx-hero__video-stack">
-        <video
-          id="hero-video"
+        <canvas
+          id="hero-canvas"
           class="tx-hero__video"
-          src="assets/ai_product_video.mp4"
-          autoplay muted loop playsinline preload="auto"
-          aria-label="Cinematic transmission of the Tester Smart Watch Pro"
-        ></video>
+          data-canvas
+          width="1920"
+          height="1080"
+          aria-label="Scroll-driven Tester Ring Pro dissection, 192 frames"
+        ></canvas>
 
         <!-- chromatic edge overlay -->
         <span class="tx-hero__video-edge" aria-hidden="true"></span>
@@ -100,14 +112,15 @@
           </span>
           <span class="tx-hero__hud-rec">
             <span class="tx-hero__hud-rec-dot"></span>
-            LIVE
+            <span id="tx-hud-frame">001 / 192</span>
           </span>
         </div>
       </div>
       <p class="tx-hero__video-caption">
-        Recorded on the Tester bench &mdash; <em>04:88:000</em>, gate&nbsp;A, take&nbsp;7.
+        Scroll to scrub &mdash; <em>192 frames</em>, Veo&nbsp;3 Fast keyframe transition.
       </p>
     </div>
+   </div><!-- /.tx-hero__inner -->
   </section>
 
   <!-- CINEMASCOPE — letterboxed scroll-driven frame strip -->
@@ -119,7 +132,7 @@
       </p>
       <h2 class="tx-scope__title">
         <span>Scrub through the cut.</span>
-        <em class="tx-scope__title-em">One scroll &mdash; one second.</em>
+        <em class="tx-scope__title-em">One scroll &mdash; one layer.</em>
       </h2>
     </div>
 
@@ -157,7 +170,7 @@
           <div class="tx-scope__loader" id="frames-loader">
             <span class="tx-scope__loader-label">No transmission</span>
             <span class="tx-scope__loader-hint" id="frames-loader-hint">
-              Frame buffer empty. Run the FFmpeg command to populate <code>assets/frames/</code>.
+              Frame buffer empty. Run <code>gen-ring-dissection-frames.ps1</code> to populate <code>assets/ring-frames/</code>.
             </span>
             <span class="tx-scope__loader-bar"><span id="frames-loader-fill"></span></span>
           </div>
@@ -190,27 +203,29 @@
         Notes from the bench
       </p>
       <h2 class="tx-split__title">
-        We <em>filmed</em> it<br/>
-        instead of<br/>
-        <em>rendering</em> it.
+        We <em>took</em> it<br/>
+        apart so<br/>
+        <em>you</em> can&rsquo;t.
       </h2>
       <div class="tx-split__body">
         <p>
-          Every angle of the Pro you see here is real glass and real metal under real
-          light. Eight seconds, one continuous take, captured on a 35&nbsp;mm prime with
-          the lens open just under a stop. The bench was dressed black on black; the
-          only colour you&rsquo;ll see is whatever the watch decides to throw back.
+          What you&rsquo;re scrolling through above is the Loop Ring exploded into the
+          five components that make it work: a brushed grade-5 titanium outer shell, a
+          polished mirror inner band, a miniature PCB with gold traces and a tiny SoC,
+          a curved silicon-anode battery cell, and an inward-facing sensor stack of six
+          green / red / infrared photodiodes.
         </p>
         <p>
-          What you&rsquo;re scrolling through above is the same footage, frame by frame.
-          The picture is meant to be looked at &mdash; not interpreted.
+          Eight seconds, one continuous transition &mdash; rendered through Veo&nbsp;3
+          from two hand-composed bookend stills. The bench was dressed black on black;
+          the only colour you&rsquo;ll see is whatever the titanium decides to throw back.
         </p>
       </div>
     </div>
     <div class="tx-split__panel tx-split__panel--echo">
       <video
         class="tx-split__video"
-        src="assets/ai_product_video.mp4"
+        src="assets/ring-dissection/ring-transition.mp4"
         autoplay muted loop playsinline preload="metadata"
         aria-hidden="true"
       ></video>
@@ -224,16 +239,16 @@
       <span class="tx-hero__eyebrow-tick"></span>
       End of transmission &middot; <span id="tx-close-clock">--:--:--</span>
     </p>
-    <a href="index.html" class="tx-close__link">
+    <a href="loopring.html" class="tx-close__link">
       <span class="tx-close__link-row">
         <span class="tx-close__link-arrow">&larr;</span>
         <span class="tx-close__link-word">Return</span>
       </span>
       <span class="tx-close__link-row tx-close__link-row--big">
-        <em>to the product</em>
+        <em>to the Loop Ring</em>
       </span>
       <span class="tx-close__link-row tx-close__link-row--meta">
-        See the Pro in full &mdash; spec sheet, dissection, reservation.
+        See the Ring in full &mdash; spec sheet, materials, reservation.
       </span>
     </a>
 

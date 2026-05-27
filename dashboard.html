@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Dashboard — Tester</title>
+  <meta name="robots" content="noindex,nofollow" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&family=Manrope:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/dashboard.css" />
+</head>
+<body class="dash-body">
+  <div class="grain" aria-hidden="true"></div>
+  <div class="vignette" aria-hidden="true"></div>
+
+  <!-- ============== LOGIN GATE ============== -->
+  <section id="loginGate" class="dash-gate">
+    <div class="dash-gate__card">
+      <p class="eyebrow"><span class="eyebrow__dot"></span> Tester &nbsp;/&nbsp; Admin</p>
+      <h1 class="dash-gate__title">Workshop<br/><em>console.</em></h1>
+      <p class="dash-gate__lede">Access restricted. Enter the dashboard password to continue.</p>
+
+      <form id="loginForm" class="dash-gate__form" novalidate>
+        <label class="field" for="dash-pw">
+          <span class="field__label"><span class="field__index">·</span><span>Password</span></span>
+          <input class="field__input" id="dash-pw" type="password" autocomplete="current-password" required />
+        </label>
+        <p id="loginStatus" class="contact__status" role="status" aria-live="polite"></p>
+        <button class="btn btn--primary" type="submit">
+          <span>Access Dashboard</span>
+          <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
+            <path d="M3 8h10M9 3l5 5-5 5" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="square" />
+          </svg>
+        </button>
+      </form>
+    </div>
+  </section>
+
+  <!-- ============== DASHBOARD ============== -->
+  <main id="dashApp" class="dash" hidden>
+    <aside class="dash__nav" aria-label="Sections">
+      <div class="dash__brand">
+        <span class="nav__mark">T</span>
+        <span class="dash__brand-name">TESTER</span>
+        <span class="dash__brand-sub">Admin console</span>
+      </div>
+      <nav>
+        <button class="dash__nav-item is-active" data-section="overview">Overview</button>
+        <button class="dash__nav-item"           data-section="submissions">Form Submissions</button>
+        <button class="dash__nav-item"           data-section="subscribers">Subscribers</button>
+        <button class="dash__nav-item"           data-section="emails">Email Log</button>
+        <button class="dash__nav-item"           data-section="newsletter-new">New Newsletter</button>
+        <button class="dash__nav-item"           data-section="newsletters">Saved Newsletters</button>
+      </nav>
+      <div class="dash__nav-foot">
+        <button id="logoutBtn" class="dash__logout">Sign out →</button>
+      </div>
+    </aside>
+
+    <section class="dash__main">
+      <!-- ===== OVERVIEW ===== -->
+      <div class="dash-section is-active" data-section="overview">
+        <header class="dash-section__head">
+          <p class="eyebrow"><span class="eyebrow__dot"></span> Overview</p>
+          <h2 class="dash-section__title">At a <em>glance.</em></h2>
+        </header>
+        <div class="stat-grid" id="statGrid">
+          <!-- filled by JS -->
+        </div>
+
+        <h3 class="dash-section__sub">Latest submissions</h3>
+        <div class="dash-table-wrap"><table class="dash-table" id="recentTable">
+          <thead><tr><th>When</th><th>Name</th><th>Email</th><th>Status</th></tr></thead>
+          <tbody></tbody>
+        </table></div>
+      </div>
+
+      <!-- ===== FORM SUBMISSIONS ===== -->
+      <div class="dash-section" data-section="submissions">
+        <header class="dash-section__head">
+          <p class="eyebrow"><span class="eyebrow__dot"></span> Submissions</p>
+          <h2 class="dash-section__title">Everyone who <em>wrote in.</em></h2>
+          <p class="dash-section__lede">Click any row to see the full message and update the reply status.</p>
+        </header>
+        <div class="dash-toolbar">
+          <input id="subFilter" class="field__input" type="search" placeholder="Filter by name, email, or message…" />
+        </div>
+        <div class="dash-table-wrap"><table class="dash-table" id="subsTable">
+          <thead><tr><th>When</th><th>Name</th><th>Email</th><th>Message</th><th>Status</th><th>News?</th></tr></thead>
+          <tbody></tbody>
+        </table></div>
+      </div>
+
+      <!-- ===== SUBSCRIBERS ===== -->
+      <div class="dash-section" data-section="subscribers">
+        <header class="dash-section__head">
+          <p class="eyebrow"><span class="eyebrow__dot"></span> Subscribers</p>
+          <h2 class="dash-section__title">Newsletter <em>opt-ins.</em></h2>
+          <p class="dash-section__lede">People who ticked the newsletter box and have not unsubscribed.</p>
+        </header>
+        <div class="dash-table-wrap"><table class="dash-table" id="subsListTable">
+          <thead><tr><th>Joined</th><th>Name</th><th>Email</th><th></th></tr></thead>
+          <tbody></tbody>
+        </table></div>
+      </div>
+
+      <!-- ===== EMAIL LOG ===== -->
+      <div class="dash-section" data-section="emails">
+        <header class="dash-section__head">
+          <p class="eyebrow"><span class="eyebrow__dot"></span> Email log</p>
+          <h2 class="dash-section__title">Every <em>send.</em></h2>
+          <p class="dash-section__lede">Confirmations, follow-ups, broadcasts — all logged here.</p>
+        </header>
+        <div class="dash-table-wrap"><table class="dash-table" id="emailsTable">
+          <thead><tr><th>Sent</th><th>Recipient</th><th>Kind</th><th>Step</th><th>Status</th></tr></thead>
+          <tbody></tbody>
+        </table></div>
+      </div>
+
+      <!-- ===== NEW NEWSLETTER ===== -->
+      <div class="dash-section" data-section="newsletter-new">
+        <header class="dash-section__head">
+          <p class="eyebrow"><span class="eyebrow__dot"></span> Newsletter</p>
+          <h2 class="dash-section__title">Compose &amp; <em>save.</em></h2>
+          <p class="dash-section__lede">Write in HTML or plain text. Drafts go to <em>Saved Newsletters</em>.</p>
+        </header>
+        <form id="newsletterForm" class="dash-form">
+          <label class="field">
+            <span class="field__label"><span class="field__index">01</span><span>Subject</span></span>
+            <input class="field__input" id="nl-subject" type="text" placeholder="Field notes — May 2026" required />
+          </label>
+          <label class="field">
+            <span class="field__label"><span class="field__index">02</span><span>Body (HTML allowed)</span></span>
+            <textarea class="field__input field__input--area" id="nl-body" rows="12" placeholder="<p>Hi {{firstName}},</p>..." required></textarea>
+          </label>
+          <p id="nlStatus" class="contact__status" role="status" aria-live="polite"></p>
+          <div class="dash-form__actions">
+            <button type="submit" class="btn btn--primary">Save draft</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- ===== SAVED NEWSLETTERS ===== -->
+      <div class="dash-section" data-section="newsletters">
+        <header class="dash-section__head">
+          <p class="eyebrow"><span class="eyebrow__dot"></span> Drafts</p>
+          <h2 class="dash-section__title">Saved <em>newsletters.</em></h2>
+        </header>
+        <div class="dash-table-wrap"><table class="dash-table" id="nlTable">
+          <thead><tr><th>Updated</th><th>Subject</th><th>Status</th><th></th></tr></thead>
+          <tbody></tbody>
+        </table></div>
+      </div>
+    </section>
+  </main>
+
+  <script src="js/dashboard.js" defer></script>
+</body>
+</html>

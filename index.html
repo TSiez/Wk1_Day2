@@ -32,8 +32,9 @@
     <nav class="nav__links" aria-label="Primary">
       <a href="#features">Features</a>
       <a href="#dissection">Inside</a>
+      <a href="Sights.html" class="nav__links-accent">Sights <span aria-hidden="true">&#8599;</span></a>
       <a href="anything.html" class="nav__links-accent">Motion&nbsp;Reel <span aria-hidden="true">&#8599;</span></a>
-      <a href="#order">Order</a>
+      <a href="#contact">Contact</a>
     </nav>
 
    <a href="TesterTech.html" class="nav__cta">
@@ -81,8 +82,8 @@
       </p>
 
       <div class="hero__cta-row" data-reveal data-reveal-delay="400">
-        <a href="#order" class="btn btn--primary">
-          <span>Reserve the Pro</span>
+        <a href="#contact" class="btn btn--primary">
+          <span>Talk to the workshop</span>
           <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
             <path d="M3 8h10M9 3l5 5-5 5" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="square" />
           </svg>
@@ -172,9 +173,13 @@
         <span class="feature__num">02</span>
         <div class="feature__icon" aria-hidden="true">
           <svg viewBox="0 0 40 40" width="40" height="40">
-            <rect x="7" y="7" width="26" height="26" rx="2" stroke="currentColor" stroke-width="1.2" fill="none" />
-            <path d="M13 13l14 14M27 13L13 27" stroke="currentColor" stroke-width="1.2" />
-            <circle cx="20" cy="20" r="2" fill="currentColor" />
+            <!-- Three orthogonal gimbal rings: yaw, pitch, roll -->
+            <ellipse cx="20" cy="20" rx="14" ry="5"  stroke="currentColor" stroke-width="1.2" fill="none" />
+            <ellipse cx="20" cy="20" rx="5"  ry="14" stroke="currentColor" stroke-width="1.2" fill="none" />
+            <circle  cx="20" cy="20" r="11"           stroke="currentColor" stroke-width="1.2" fill="none" opacity="0.55" />
+            <!-- Pivot point + cardinal axis marks -->
+            <circle  cx="20" cy="20" r="1.8" fill="currentColor" />
+            <path d="M20 4v2.6M20 33.4v2.6M4 20h2.6M33.4 20h2.6" stroke="currentColor" stroke-width="1.2" />
           </svg>
         </div>
         <h3 class="feature__title">Six-axis IMU</h3>
@@ -415,7 +420,7 @@
             <span class="ecosystem__core-label">TESTER&nbsp;MESH</span>
           </span>
 
-          <span class="ecosystem__node ecosystem__node--watch" style="--a:0deg;   --r:38%;">
+          <span class="ecosystem__node ecosystem__node--watch" style="--a:0deg;   --r:42%;">
             <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
               <rect x="6" y="3" width="12" height="3" rx="1" fill="currentColor"/>
               <rect x="6" y="18" width="12" height="3" rx="1" fill="currentColor"/>
@@ -424,7 +429,7 @@
             </svg>
             <span>Watch&nbsp;Pro</span>
           </span>
-          <span class="ecosystem__node ecosystem__node--glasses" style="--a:72deg;  --r:38%;">
+          <span class="ecosystem__node ecosystem__node--glasses" style="--a:72deg;  --r:42%;">
             <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
               <circle cx="6.5" cy="13" r="3.4" fill="none" stroke="currentColor" stroke-width="1.4"/>
               <circle cx="17.5" cy="13" r="3.4" fill="none" stroke="currentColor" stroke-width="1.4"/>
@@ -432,7 +437,7 @@
             </svg>
             <span>Lens&nbsp;01</span>
           </span>
-          <span class="ecosystem__node ecosystem__node--speaker" style="--a:144deg; --r:38%;">
+          <span class="ecosystem__node ecosystem__node--speaker" style="--a:144deg; --r:42%;">
             <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
               <rect x="6" y="3" width="12" height="18" rx="6" fill="none" stroke="currentColor" stroke-width="1.4"/>
               <circle cx="12" cy="9" r="1.4" fill="currentColor"/>
@@ -440,13 +445,13 @@
             </svg>
             <span>Echo&nbsp;Field</span>
           </span>
-          <span class="ecosystem__node ecosystem__node--bulb" style="--a:216deg; --r:38%;">
+          <span class="ecosystem__node ecosystem__node--bulb" style="--a:216deg; --r:42%;">
             <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
               <path d="M9 18h6M10 21h4M12 3a6 6 0 00-3.5 10.9c.6.5 1 1.2 1 2V16h5v-.1c0-.8.4-1.5 1-2A6 6 0 0012 3z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>
             </svg>
             <span>Halo&nbsp;Lamp</span>
           </span>
-          <span class="ecosystem__node ecosystem__node--ring" style="--a:288deg; --r:38%;">
+          <span class="ecosystem__node ecosystem__node--ring" style="--a:288deg; --r:42%;">
             <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
               <circle cx="12" cy="13" r="6.5" fill="none" stroke="currentColor" stroke-width="1.4"/>
               <path d="M9 6.5l3-3 3 3" stroke="currentColor" stroke-width="1.4" fill="none" stroke-linejoin="round"/>
@@ -467,34 +472,110 @@
     </div>
   </section>
 
-  <!-- CTA -->
-  <section class="cta" id="order">
-    <div class="cta__inner">
-      <p class="eyebrow" data-reveal>
-        <span class="eyebrow__dot"></span>
-        Reserve <span class="eyebrow__sep">/</span> Edition 01
-      </p>
-      <h2 class="cta__title" data-reveal data-reveal-delay="100">
-        Yours, when the<br />
-        <em>first hundred</em> ship.
-      </h2>
-      <p class="cta__lede" data-reveal data-reveal-delay="200">
-        Reservations open at $749 for a refundable deposit of $50. Numbered to the
-        first hundred, shipped from Berlin.
-      </p>
+  <!-- CONTACT -->
+  <section class="contact" id="contact">
+    <div class="contact__inner">
+      <header class="contact__copy">
+        <p class="eyebrow" data-reveal>
+          <span class="eyebrow__dot"></span>
+          Contact <span class="eyebrow__sep">/</span> Open a file
+        </p>
+        <h2 class="contact__title" data-reveal data-reveal-delay="100">
+          Speak to the<br />
+          <em>workshop.</em>
+        </h2>
+        <p class="contact__lede" data-reveal data-reveal-delay="200">
+          Press inquiries, pre-order questions, partnership notes — leave a line
+          and a member of the Berlin bench will reply within two working days.
+        </p>
 
-      <div class="cta__row" data-reveal data-reveal-delay="320">
-        <a href="#" class="btn btn--primary btn--large">
-          <span>Reserve the Pro</span>
-          <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true">
-            <path d="M3 9h11M10 3l6 6-6 6" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="square" />
-          </svg>
-        </a>
-        <span class="cta__price">
-          <span class="cta__price-deposit">$50 deposit</span>
-          <span class="cta__price-full">$749 at ship</span>
-        </span>
-      </div>
+        <ul class="contact__meta" data-reveal data-reveal-delay="280">
+          <li>
+            <span class="contact__meta-label">Workshop</span>
+            <span class="contact__meta-value">Berlin, DE</span>
+          </li>
+          <li>
+            <span class="contact__meta-label">Reply</span>
+            <span class="contact__meta-value">&lt; 48&nbsp;hours</span>
+          </li>
+          <li>
+            <span class="contact__meta-label">Channel</span>
+            <a class="contact__meta-value contact__meta-value--link" href="mailto:hello@tester.tech">hello@tester.tech</a>
+          </li>
+        </ul>
+      </header>
+
+      <form class="contact__form" id="contact-form" onsubmit="submitForm(event)" data-reveal data-reveal-delay="160" novalidate>
+        <div class="field">
+          <label class="field__label" for="cf-name">
+            <span class="field__index">01</span>
+            <span>Name</span>
+          </label>
+          <input
+            class="field__input"
+            id="cf-name"
+            name="name"
+            type="text"
+            autocomplete="name"
+            placeholder="Your name"
+            required
+          />
+        </div>
+
+        <div class="field">
+          <label class="field__label" for="cf-email">
+            <span class="field__index">02</span>
+            <span>Email</span>
+          </label>
+          <input
+            class="field__input"
+            id="cf-email"
+            name="email"
+            type="email"
+            autocomplete="email"
+            placeholder="you@somewhere.com"
+            required
+          />
+        </div>
+
+        <div class="field">
+          <label class="field__label" for="cf-message">
+            <span class="field__index">03</span>
+            <span>Message</span>
+          </label>
+          <textarea
+            class="field__input field__input--area"
+            id="cf-message"
+            name="message"
+            rows="5"
+            placeholder="Tell us what brought you here."
+            required
+          ></textarea>
+        </div>
+
+        <label class="field-check" for="cf-newsletter">
+          <input id="cf-newsletter" name="newsletter" type="checkbox" value="1" />
+          <span class="field-check__box" aria-hidden="true"></span>
+          <span class="field-check__copy">
+            Send me dispatches from the Berlin bench.
+            <span class="field-check__sub">Quiet, occasional &mdash; no more than monthly.</span>
+          </span>
+        </label>
+
+        <p class="contact__status" id="contactStatus" role="status" aria-live="polite"></p>
+
+        <div class="contact__submit-row">
+          <button type="submit" class="btn btn--primary contact__submit">
+            <span>Send message</span>
+            <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
+              <path d="M3 8h10M9 3l5 5-5 5" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="square" />
+            </svg>
+          </button>
+          <span class="contact__legal">
+            By sending, you accept our quiet, non-marketing reply policy.
+          </span>
+        </div>
+      </form>
     </div>
   </section>
 
@@ -510,16 +591,23 @@
 
     <div class="footer__bottom">
       <p class="footer__copy">&copy; 2026 Tester Instruments. Built in Berlin.</p>
+      <ul class="footer__links" aria-label="Information">
+        <li><a href="TesterTech.html">Tester Tech</a></li>
+        <li><a href="Sights.html">Sights</a></li>
+        <li><a href="press.html">Press</a></li>
+        <li><a href="service.html">Service</a></li>
+        <li><a href="privacy.html">Privacy</a></li>
+      </ul>
       <ul class="footer__social" aria-label="Social links">
         <li>
-          <a href="#" aria-label="Twitter / X">
+          <a href="#" aria-disabled="true" title="Coming soon" aria-label="Tester on X (coming soon)">
             <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true">
               <path d="M2.5 2.5l5.7 7.6L3 15.5h2l4.3-4.6 3.4 4.6h3.8L10.5 7.6l4.7-5.1h-2L9.2 6.6 6 2.5H2.5z" fill="currentColor"/>
             </svg>
           </a>
         </li>
         <li>
-          <a href="#" aria-label="Instagram">
+          <a href="#" aria-disabled="true" title="Coming soon" aria-label="Tester on Instagram (coming soon)">
             <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true">
               <rect x="2.5" y="2.5" width="13" height="13" rx="3.5" stroke="currentColor" stroke-width="1.2" fill="none"/>
               <circle cx="9" cy="9" r="3.2" stroke="currentColor" stroke-width="1.2" fill="none"/>
@@ -528,7 +616,7 @@
           </a>
         </li>
         <li>
-          <a href="#" aria-label="YouTube">
+          <a href="#" aria-disabled="true" title="Coming soon" aria-label="Tester on YouTube (coming soon)">
             <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true">
               <rect x="1.5" y="4.5" width="15" height="9" rx="2.5" stroke="currentColor" stroke-width="1.2" fill="none"/>
               <path d="M7.5 6.8l4 2.2-4 2.2V6.8z" fill="currentColor"/>
@@ -544,5 +632,98 @@
   </footer>
 
   <script src="js/script.js" defer></script>
+
+  <!-- Contact form -> Supabase (primary) + Google Sheets (mirror) -->
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+
+    // ⬇️ Replace these two with your project values
+    // Dashboard → Project Settings → Data API
+    const SUPABASE_URL      = 'https://rcuvzfzqrozhovddffqk.supabase.co';
+    const SUPABASE_ANON_KEY = 'sb_publishable_Nq08126Jf0VIgYDXFVIidw_aEnqqVMh';
+
+    // ⬇️ Google Sheets mirror (Apps Script web app). Leave empty to disable.
+    // Anyone who finds this URL can write rows to your Sheet — no secret check.
+    const SHEETS_WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbxvcTtKuK7MWhZP5U8EsD9vNKEyJkhHQH5cyD2-QUqCCxlKUFtPrU-amrpKyTC2GqZQ/exec';
+
+    const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    // Expose the handler so the inline onsubmit attribute can find it.
+    window.submitForm = async function submitForm(e) {
+      e.preventDefault();
+      const f = e.target;
+      const status = document.getElementById('contactStatus');
+      const btn = f.querySelector('button[type="submit"]');
+
+      const setStatus = (msg, kind) => {
+        if (!status) return;
+        status.textContent = msg || '';
+        status.classList.remove('is-error', 'is-success');
+        if (kind) status.classList.add(`is-${kind}`);
+      };
+
+      setStatus('Sending…');
+      if (btn) btn.disabled = true;
+
+      const payload = {
+        name:                  f.name.value.trim(),
+        email:                 f.email.value.trim(),
+        message:               f.message.value.trim(),
+        newsletter_subscribed: !!f.newsletter?.checked,
+        user_agent:            navigator.userAgent,
+        source:                'landing_contact_form'
+      };
+
+      const { error } = await supabase
+        .from('contact_submissions')
+        .insert(payload);
+
+      if (error) {
+        console.error('Supabase insert failed:', error);
+        // Friendly mapping of the two errors users actually hit
+        const friendly =
+          error.code === '23505' ? 'Looks like that just went through — give it an hour and try again.' :
+          error.code === '23514' ? 'Please double-check the form fields.' :
+          'Could not send. Please try again.';
+        setStatus(friendly, 'error');
+        if (btn) btn.disabled = false;
+        return;
+      }
+
+      // Fire-and-forget mirror to Google Sheets. We build a row client-side
+      // with the same shape as public.contact_submissions so Sheet columns
+      // line up, mimicking the trigger's defaults so the two stay aligned.
+      if (SHEETS_WEBHOOK_URL) {
+        const nowIso = new Date().toISOString();
+        const mirror = {
+          id:                    (crypto.randomUUID?.() ?? null),
+          created_at:            nowIso,
+          name:                  payload.name,
+          email:                 payload.email,
+          message:               payload.message,
+          reply_status:          'pending',
+          replied_at:            null,
+          replied_by:            null,
+          newsletter_subscribed: payload.newsletter_subscribed,
+          newsletter_opt_in_at:  payload.newsletter_subscribed ? nowIso : null,
+          source:                payload.source,
+          user_agent:            payload.user_agent,
+          ip_hash:               null,
+        };
+        try {
+          fetch(SHEETS_WEBHOOK_URL, {
+            method:    'POST',
+            mode:      'no-cors',
+            keepalive: true,
+            headers:   { 'Content-Type': 'text/plain;charset=utf-8' },
+            body:      JSON.stringify(mirror)
+          }).catch(() => {});
+        } catch (_) { /* swallow — user flow continues */ }
+      }
+
+      setStatus('Sent — redirecting…', 'success');
+      window.location.href = 'thank-you.html';
+    };
+  </script>
 </body>
 </html>

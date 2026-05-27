@@ -1,0 +1,206 @@
+==============================================================================
+ TESTER — COMMANDS REFERENCE
+ Last updated: 2026-05-25
+==============================================================================
+
+Project root: c:\Users\acer\Desktop\Arca\D2
+Always run commands from there:
+
+  cd c:\Users\acer\Desktop\Arca\D2
+
+
+==============================================================================
+ 1. EVERYDAY COMMANDS  (the ones you actually use)
+==============================================================================
+
+  npm start                              Runs site + dashboard at
+                                         http://localhost:3000
+
+  npm run dev                            Same, but auto-reloads server.js
+                                         when you edit it
+
+  npm test                               Runs Playwright e2e tests across
+                                         Chromium, Firefox, WebKit
+
+  npm run test:headed                    Same, but with visible browser
+                                         windows so you can watch
+
+  npm run test:ui                        Opens Playwright UI mode — the
+                                         best debugging experience
+
+  npm run test:report                    Opens the HTML report from the
+                                         last test run
+
+  node scripts/seed-submissions.mjs      Re-seeds 20 sample submissions
+                                         into Supabase
+
+Dashboard URL:    http://localhost:3000/dashboard.html
+Dashboard pwd:    passwordii          (set in .env, change any time)
+
+
+==============================================================================
+ 2. FIRST-TIME SETUP  (already done — listed for reproducibility)
+==============================================================================
+
+--- Node packages ---
+
+  npm install
+  npm install -D @playwright/test
+  npx playwright install
+
+
+--- Supabase CLI ---
+
+  npx supabase login
+  npx supabase link --project-ref rcuvzfzqrozhovddffqk
+
+
+--- Supabase secrets (used by Edge Functions in the cloud) ---
+
+  npx supabase secrets set RESEND_API_KEY=re_yourKeyFromResend
+  npx supabase secrets set REPLY_TO=arca11@briarbear.ai
+  npx supabase secrets set WEBHOOK_SECRET=<random_40_chars>
+  npx supabase secrets set CRON_SECRET=<random_40_chars>
+  npx supabase secrets set SITE_URL=http://localhost:3000
+
+  # Generate a strong random string:
+  node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
+
+
+--- Apply database migrations ---
+
+  npx supabase db push        # answer "Y" at the prompt
+
+
+--- Deploy Edge Functions ---
+
+  npx supabase functions deploy send-welcome-email   --no-verify-jwt
+  npx supabase functions deploy send-followup-email  --no-verify-jwt
+  npx supabase functions deploy unsubscribe          --no-verify-jwt
+
+
+--- .env file (project root) ---
+
+  DASHBOARD_PASSWORD=passwordii
+  SUPABASE_URL=https://rcuvzfzqrozhovddffqk.supabase.co
+  SUPABASE_SERVICE_ROLE_KEY=<service role JWT>
+
+  # To fetch the service role key again:
+  npx supabase projects api-keys --project-ref rcuvzfzqrozhovddffqk
+
+
+--- Database webhook (one-time, set in dashboard UI) ---
+
+  URL:    https://supabase.com/dashboard/project/rcuvzfzqrozhovddffqk/
+          integrations/webhooks/overview
+
+  Create webhook:
+    Table:    contact_submissions
+    Events:   Insert only
+    Method:   POST
+    URL:      https://rcuvzfzqrozhovddffqk.supabase.co/functions/v1/
+              send-welcome-email
+    Header:   x-webhook-secret: <your WEBHOOK_SECRET>
+
+
+==============================================================================
+ 3. VERIFICATION / DIAGNOSTIC COMMANDS
+==============================================================================
+
+  # What's listening on port 3000?
+  netstat -ano | findstr :3000 | findstr LISTENING
+
+  # Kill a stuck process by PID
+  taskkill /F /PID <PID>
+
+  # Which Supabase project is linked?
+  type supabase\.temp\project-ref
+
+  # What Supabase secrets are set?
+  npx supabase secrets list
+
+  # What Edge Functions are deployed?
+  npx supabase functions list
+
+  # Check Node version (needs >= 18.19 for ESM configs)
+  node --version
+
+  # Force-fire the follow-up cron job right now
+  # (run this inside the Supabase SQL editor):
+  select public.tick_followups();
+
+
+==============================================================================
+ 4. "I JUST SAT DOWN" SEQUENCE
+==============================================================================
+
+  cd c:\Users\acer\Desktop\Arca\D2
+
+  # Step 1: make sure port 3000 is free
+  netstat -ano | findstr :3000 | findstr LISTENING
+  # (if anything shows up that isn't yours, kill it with taskkill)
+
+  # Step 2: start the server
+  npm start
+
+  # Step 3: in another terminal, run the test suite
+  npm test
+
+  # Step 4: open the dashboard in your browser
+  #   URL:       http://localhost:3000/dashboard.html
+  #   password:  passwordii
+
+That's the full daily flow. Resend and the cron jobs run themselves in
+the Supabase + Resend cloud — nothing to start on your machine for those.
+
+
+==============================================================================
+ 5. WHAT RUNS WHERE  (mental model)
+==============================================================================
+
+  Component               Location           When it runs
+  ----------------------  -----------------  ---------------------------
+  Landing page            Local files        When you `npm start`
+  Express server          Your laptop        When you `npm start`
+  Dashboard API           Your laptop        When you `npm start`
+  Supabase database       Supabase cloud     Always
+  Edge Functions          Supabase cloud     On invocation
+  Resend                  Resend cloud       When a function calls it
+  Playwright tests        Your laptop        When you `npm test`
+  pg_cron job             Supabase cloud     Daily at 10:00 UTC
+
+  Only items marked "Your laptop" need anything started locally.
+  Everything else is hosted in the cloud.
+
+
+==============================================================================
+ 6. COMMON ISSUES
+==============================================================================
+
+  "404 Not Found: /dashboard.html"
+      A different server is on port 3000 (e.g. the Tester.io project).
+      Kill it with taskkill, or start D2 on a different port:
+          $env:PORT=3040; npm start
+
+  Dashboard shows 0 submissions
+      .env not loaded. Console will say "[warn] SUPABASE_URL / ...
+      missing". Make sure .env exists at the project root and that
+      DASHBOARD_PASSWORD, SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY are
+      all populated.
+
+  Resend says 403 "you can only send to your own email"
+      You're on the testing sender onboarding@resend.dev, which only
+      delivers to your Resend account email. To send to anyone, verify
+      a domain at https://resend.com/domains and then:
+          npx supabase secrets set FROM_ADDRESS="Tester <hello@yours.com>"
+
+  Playwright Firefox times out on page.goto
+      Already handled in test-form.mjs via `waitUntil: 'domcontentloaded'`.
+      If you copy the test, keep that option.
+
+  "node --version" shows 18.18.x or older
+      Playwright ESM configs need >= 18.19. The repo's config is
+      CommonJS (.js) specifically so older Node still works. If you
+      upgrade, you can switch to playwright.config.mjs.
+
+==============================================================================

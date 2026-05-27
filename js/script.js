@@ -57,4 +57,7 @@
     if (v.readyState >= 2) tryPlay();
     else v.addEventListener('loadeddata', tryPlay, { once: true });
   });
+
+  /* Contact-form submit is handled inline in index.html via submitForm()
+     so the page works as a static deploy (no Express needed). */
 })();

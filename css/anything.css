@@ -1,28 +1,31 @@
 /* ============================================================
    anything.html — TRANSMISSION 002.5
-   A standalone, void-cool, asymmetric design system.
-   Deliberately shares NO tokens with product.html.
+   Color tokens remapped to match Sights.html / Tester editorial palette:
+   warm near-black void, brass-gold accent, off-white text. Variable
+   NAMES preserved so the rest of the file resolves without rewriting.
    ============================================================ */
 
 :root {
-  /* void palette */
-  --tx-void:    #06070b;
-  --tx-ink:     #0a0c14;
-  --tx-haze:    #11141f;
-  --tx-edge:    rgba(232, 230, 220, 0.08);
-  --tx-edge-2:  rgba(232, 230, 220, 0.18);
+  /* warm void palette (was cool: #06070b / #0a0c14 / #11141f) */
+  --tx-void:    #0a0908;
+  --tx-ink:     #111110;
+  --tx-haze:    #15140f;
+  --tx-edge:    rgba(243, 239, 231, 0.08);
+  --tx-edge-2:  rgba(243, 239, 231, 0.16);
 
-  /* type */
-  --tx-text:    #e8e6dc;
-  --tx-soft:    #b4b1a7;
-  --tx-mute:    #6c6f7d;
-  --tx-faint:   #3f414c;
+  /* warm type (was cool: #e8e6dc / #b4b1a7 / #6c6f7d / #3f414c) */
+  --tx-text:    #f3efe7;
+  --tx-soft:    #c8c2b6;
+  --tx-mute:    #8a847a;
+  --tx-faint:   #5a564e;
 
-  /* dual accents — distinct from product.html's brass */
-  --tx-aqua:    #7ad3d3;          /* primary cool accent */
-  --tx-aqua-2:  rgba(122, 211, 211, 0.18);
-  --tx-aqua-3:  rgba(122, 211, 211, 0.45);
-  --tx-ember:   #ff7048;          /* hot HUD accent, used sparingly */
+  /* accents — brass primary (was aqua), warm cool blue secondary
+     (was ember). Names kept as -aqua / -ember so existing rules
+     resolve unchanged. */
+  --tx-aqua:    #c89e6a;          /* brass-gold primary */
+  --tx-aqua-2:  rgba(200, 158, 106, 0.16);
+  --tx-aqua-3:  rgba(200, 158, 106, 0.45);
+  --tx-ember:   #76b2dc;          /* sapphire-cool secondary, used sparingly */
 
   /* fonts */
   --tx-display: 'Fraunces', 'Iowan Old Style', serif;
@@ -59,9 +62,9 @@ body.tx {
   position: fixed; inset: -10vh;
   z-index: 0;
   background:
-    radial-gradient(ellipse 50% 40% at 22% 18%, rgba(122, 211, 211, 0.12), transparent 60%),
-    radial-gradient(ellipse 60% 50% at 78% 82%, rgba(255, 112, 72, 0.08), transparent 65%),
-    radial-gradient(ellipse 80% 60% at 50% 50%, rgba(11, 18, 36, 0.6), transparent 80%);
+    radial-gradient(ellipse 50% 40% at 22% 18%, rgba(200, 158, 106, 0.12), transparent 60%),
+    radial-gradient(ellipse 60% 50% at 78% 82%, rgba(118, 178, 220, 0.08), transparent 65%),
+    radial-gradient(ellipse 80% 60% at 50% 50%, rgba(10, 9, 8, 0.6), transparent 80%);
   pointer-events: none;
   animation: txAurora 28s ease-in-out infinite alternate;
   filter: blur(40px);
@@ -91,7 +94,7 @@ body.tx {
   align-items: center;
   gap: 1.5rem;
   padding: 0.9rem var(--tx-pad);
-  background: linear-gradient(to bottom, rgba(6, 7, 11, 0.88) 0%, rgba(6, 7, 11, 0.4) 70%, transparent);
+  background: linear-gradient(to bottom, rgba(10, 9, 8, 0.88) 0%, rgba(10, 9, 8, 0.4) 70%, transparent);
   backdrop-filter: blur(14px) saturate(120%);
   -webkit-backdrop-filter: blur(14px) saturate(120%);
   border-bottom: 1px solid transparent;
@@ -103,7 +106,7 @@ body.tx {
   transition: border-color 0.3s ease, background 0.3s ease;
 }
 .tx-bar.is-scrolled {
-  background: rgba(6, 7, 11, 0.94);
+  background: rgba(10, 9, 8, 0.94);
   border-bottom-color: var(--tx-edge);
 }
 .tx-bar__id {
@@ -156,9 +159,18 @@ body.tx {
 /* ============================================================
    HERO — off-center asymmetric split
    ============================================================ */
+/* Tall section so the user has scroll distance to scrub through the 192
+   ring-dissection frames. The sticky .tx-hero__inner pins the content to
+   the viewport while the section scrolls past behind it. */
 .tx-hero {
   position: relative;
   z-index: 2;
+  min-height: 320vh;
+  padding: 0;
+}
+.tx-hero__inner {
+  position: sticky;
+  top: 0;
   min-height: 100vh;
   min-height: 100svh;
   padding: clamp(6rem, 14vh, 9rem) var(--tx-pad) clamp(3rem, 6vh, 5rem);
@@ -168,7 +180,8 @@ body.tx {
   align-items: center;
 }
 @media (max-width: 980px) {
-  .tx-hero { grid-template-columns: 1fr; gap: 2.5rem; }
+  .tx-hero { min-height: 280vh; }
+  .tx-hero__inner { grid-template-columns: 1fr; gap: 2.5rem; }
 }
 
 /* ---- left: title column ---- */
@@ -282,13 +295,13 @@ body.tx {
   position: relative;
   aspect-ratio: 16 / 11;
   width: 100%;
-  background: #04060a;
+  background: #060504;
   border-radius: 2px;
   overflow: hidden;
   box-shadow:
     0 80px 160px -40px rgba(0, 0, 0, 0.9),
     0 0 0 1px var(--tx-edge),
-    0 0 80px -10px rgba(122, 211, 211, 0.12);
+    0 0 80px -10px rgba(200, 158, 106, 0.12);
 }
 .tx-hero__video {
   position: absolute;
@@ -304,8 +317,8 @@ body.tx {
   inset: 0;
   pointer-events: none;
   background:
-    linear-gradient(to bottom, rgba(122, 211, 211, 0.18), transparent 14%, transparent 86%, rgba(255, 112, 72, 0.14)),
-    radial-gradient(ellipse at center, transparent 60%, rgba(6, 7, 11, 0.5) 100%);
+    linear-gradient(to bottom, rgba(200, 158, 106, 0.18), transparent 14%, transparent 86%, rgba(118, 178, 220, 0.14)),
+    radial-gradient(ellipse at center, transparent 60%, rgba(10, 9, 8, 0.5) 100%);
   mix-blend-mode: screen;
 }
 /* scan line */
@@ -340,7 +353,7 @@ body.tx {
   color: var(--tx-text);
 }
 .tx-hero__hud-id {
-  background: rgba(6, 7, 11, 0.65);
+  background: rgba(10, 9, 8, 0.65);
   border: 1px solid var(--tx-edge-2);
   padding: 0.3rem 0.6rem;
   color: var(--tx-aqua);
@@ -348,7 +361,7 @@ body.tx {
 .tx-hero__hud-meter {
   flex: 1;
   height: 2px;
-  background: rgba(6, 7, 11, 0.75);
+  background: rgba(10, 9, 8, 0.75);
   border: 1px solid var(--tx-edge);
   position: relative;
   overflow: hidden;
@@ -363,7 +376,7 @@ body.tx {
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
-  background: rgba(6, 7, 11, 0.65);
+  background: rgba(10, 9, 8, 0.65);
   border: 1px solid var(--tx-edge-2);
   padding: 0.3rem 0.6rem;
   color: var(--tx-ember);
@@ -400,7 +413,7 @@ body.tx {
   position: relative;
   z-index: 2;
   padding: clamp(5rem, 10vw, 9rem) var(--tx-pad) 0;
-  background: linear-gradient(to bottom, transparent, rgba(11, 14, 24, 0.6) 30%, var(--tx-ink) 100%);
+  background: linear-gradient(to bottom, transparent, rgba(10, 9, 8, 0.6) 30%, var(--tx-ink) 100%);
 }
 .tx-scope__intro {
   max-width: 64rem;
@@ -461,7 +474,7 @@ body.tx {
   position: relative;
   width: 100%;
   height: 100%;
-  background: #04060a;
+  background: #060504;
   border-top: 1px solid var(--tx-edge-2);
   border-bottom: 1px solid var(--tx-edge-2);
   overflow: hidden;
@@ -534,7 +547,7 @@ body.tx {
   gap: 0.9rem;
   padding: 2rem;
   text-align: center;
-  background: rgba(4, 6, 10, 0.85);
+  background: rgba(6, 5, 4, 0.85);
   transition: opacity 0.6s ease, visibility 0.6s ease;
 }
 .tx-scope__loader.is-hidden { opacity: 0; visibility: hidden; }
@@ -701,8 +714,8 @@ body.tx {
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(135deg, rgba(122, 211, 211, 0.08), transparent 40%),
-    radial-gradient(ellipse at center, transparent 50%, rgba(6, 7, 11, 0.55) 100%);
+    linear-gradient(135deg, rgba(200, 158, 106, 0.08), transparent 40%),
+    radial-gradient(ellipse at center, transparent 50%, rgba(10, 9, 8, 0.55) 100%);
   pointer-events: none;
 }
 .tx-split__echo-label {
@@ -715,7 +728,7 @@ body.tx {
   letter-spacing: 0.28em;
   text-transform: uppercase;
   color: var(--tx-aqua);
-  background: rgba(6, 7, 11, 0.55);
+  background: rgba(10, 9, 8, 0.55);
   border: 1px solid var(--tx-edge-2);
   padding: 0.4rem 0.8rem;
 }
@@ -733,7 +746,7 @@ body.tx {
   padding: clamp(6rem, 12vw, 11rem) var(--tx-pad) clamp(2rem, 4vw, 3rem);
   border-top: 1px solid var(--tx-edge);
   background:
-    radial-gradient(ellipse 70% 50% at 50% 30%, rgba(122, 211, 211, 0.07), transparent 70%),
+    radial-gradient(ellipse 70% 50% at 50% 30%, rgba(200, 158, 106, 0.07), transparent 70%),
     var(--tx-void);
   display: flex;
   flex-direction: column;

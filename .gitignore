@@ -19,5 +19,14 @@ Thumbs.db
 # Ephemeral verification screenshots (regenerated on demand)
 scripts/_verify/
 
+# Playwright test output
+test-results/
+playwright-report/
+
 # Local logs
 *.log
+
+# Supabase
+supabase/.temp/
+supabase/.branches/
+.supabase/
